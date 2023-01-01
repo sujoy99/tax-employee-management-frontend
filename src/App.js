@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense} from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProgressBar from "react-topbar-progress-indicator";
+
+import { authRoutes } from './routes';
+import SiteRoutes from './components/routes/SiteRoutes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+    <Suspense fallback={<ProgressBar/>}>
+      <Routes>
+        <Route path={authRoutes[0].path} element={authRoutes[0].component} />
+        <Route path='/*' element={<SiteRoutes />} />
+      </Routes>
+    </Suspense>
+  </Router>
   );
 }
 
