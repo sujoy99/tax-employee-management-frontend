@@ -8,6 +8,7 @@ class SalaryTypeModel {
     constructor() {
         this.salaryTypeName = "";
         this.studentTypeDescription = "";
+        this.salaryTypes = [{name: ""}]
     }
 
     /**
@@ -15,11 +16,12 @@ class SalaryTypeModel {
      */
     fromJson(data = '') {
         let obj = new SalaryTypeModel();
-        if (data.id !== undefined && data.id) {
-            obj.id = data.id;
-        }
-        obj.salaryTypeName = data.salaryTypeName ?? "";
-        obj.studentTypeDescription = data.studentTypeDescription ?? "";
+        // if (data.id !== undefined && data.id) {
+        //     obj.id = data.id;
+        // }
+        // obj.salaryTypeName = data.salaryTypeName ?? "";
+        // obj.studentTypeDescription = data.studentTypeDescription ?? "";
+        obj.salaryTypes = data.salaryTypes ?? [{name: ""}] 
         return obj;
     }
 
@@ -46,8 +48,11 @@ class SalaryTypeModel {
      */
     validator() {
         return Yup.object().shape({
-            salaryTypeName: Yup.string().required("Salary type name is a required field!"),
-            studentTypeDescription: Yup.string().required("Student type description is a required field!"),
+            // salaryTypeName: Yup.string().required("Salary type name is a required field!"),
+            // studentTypeDescription: Yup.string().required("Student type description is a required field!"),
+            salaryTypes: Yup.array().of(Yup.object().shape({
+                name: Yup.string().required('*Required')
+        }))
         });
     }
 
