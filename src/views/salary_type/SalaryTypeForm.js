@@ -52,7 +52,7 @@ function SalaryTypeForm(){
                     {
                         (fieldArrayProps) => {
                            console.log('fieldArrayProps', fieldArrayProps)
-                           const {push,remove, form,ErrorMessage} = fieldArrayProps
+                           const {push,remove, form} = fieldArrayProps
                            const {values} = form
                            const {salaryType} = values
                            return (
@@ -66,7 +66,7 @@ function SalaryTypeForm(){
                                     </button>
                                     
                                 )}
-                                {ErrorMessage.salaryType[index].name}
+                                
                                 <button type='button' onClick={() => push({name: ''})}> + </button>
                                 
                                 </div>
