@@ -8,7 +8,7 @@ const initialValues = {
     }
 
 const onSubmit = values => {
-    console.log(values);
+    console.log("v::",values);
 }
 
 
@@ -32,17 +32,10 @@ function SalaryTypeForm(){
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         >
-            <Form>
-            {/* <div className="form-control"  >
-                <label htmlFor='name'>Salary Type</label>
-                <Field 
-                    type='text'  
-                    id='name' 
-                    name='name'
-                    placeholder='Enter Salary Type'
-                    />
-                <ErrorMessage name='name' component={TextError}/>
-            </div> */}
+            {
+                ({values, errors}) => (
+                    <Form>
+                        {console.log("error", errors)}
             <div className='form-control'>
                 <label>Salary Type</label>
                 <FieldArray 
@@ -60,6 +53,11 @@ function SalaryTypeForm(){
                             {salaryType.map((salaryTypes,index) => (
                                 <div key={index}>
                                 <Field name={`salaryType[${index}].name`} type='text' placeholder='Enter Salary Type'/>
+                                <div className='text-danger'>
+                                <ErrorMessage name={`salaryType.${index}.name`} />
+                                </div>
+                               
+                          <br />
                                 
                                 {index > 0 && (
                                     <button type='button' onClick={() => remove(index)}>{' '} - {' '}
@@ -67,18 +65,23 @@ function SalaryTypeForm(){
                                     
                                 )}
                                 
-                                <button type='button' onClick={() => push({name: ''})}> + </button>
+                                <button type='button' onClick={() => push("")}> + </button>
+
+                                
                                 
                                 </div>
                            ))}
                            
-                           </div>
+                           </div>  
                             )
                     }}
                 </FieldArray>
             </div>
                 <button type='submit'>Submit</button>
             </Form>
+                )
+            }
+            
         </Formik>
     )
 }
