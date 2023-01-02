@@ -1,6 +1,6 @@
 import SalaryTypeForm from './SalaryTypeForm'
 
-const SalaryTypeAdd = () => { console.log("view te achi")
+const SalaryTypeAdd = () => { 
 
     return (
         <SalaryTypeForm />
