@@ -3,7 +3,6 @@ import { Field, ErrorMessage } from 'formik'
 import TextError from '../text/TextError'
 
 const Input = (props) => {
-
   const { label, name, placeHolder, ...rest } = props
   return (
     <div className='form-group row'>

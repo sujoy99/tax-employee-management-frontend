@@ -9,7 +9,6 @@ class SalaryTypeModel {
         this.salaryTypeName = "";
         this.studentTypeDescription = "";
         this.salaryTypes = [{name: ""}]
-
     }
 
     /**

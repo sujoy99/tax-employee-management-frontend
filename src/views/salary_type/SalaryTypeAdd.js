@@ -5,11 +5,11 @@ import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
+
 import DefaultCard from '../../components/card/default/DefaultCard'
 import SalaryTypeForm from './SalaryTypeForm'
 import { SalaryType } from './SalaryType';
 import { Link } from 'react-router-dom';
-
 
 
 const SalaryTypeAdd = () => { 
@@ -58,7 +58,6 @@ const SalaryTypeAdd = () => {
                 </Card.Body>
             </Card>
         </DefaultCard>
-
     )
 }
 

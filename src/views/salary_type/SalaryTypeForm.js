@@ -18,6 +18,7 @@ const SalaryTypeForm = () => {
                         const { values } = form
                         const { salaryTypes } = values
                         const listLenght = salaryTypes.length
+
                         return (
                             <div >
                                 {
@@ -35,16 +36,7 @@ const SalaryTypeForm = () => {
                                                     />
                                                 </div>
                                                 <div className="col-4">
-                                                {/* {index > 0 && (
-                                                    <div className="d-inline mr-1">
-                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
-                                                        </button>
-                                                    </div>
 
-                                                    )}
-                                                    <div className="d-inline">
-                                                    <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
-                                                    </div> */}
                                                       {
                                                          ( index > 0 && listLenght -1 === index) && (
                                                             <div className="d-inline mr-1">
@@ -72,7 +64,6 @@ const SalaryTypeForm = () => {
                                             </div>
                                         </div>
                                     ))
-
                                 }
                                 <Col md={12} className='mb-10 mt-10 ml-5'>
                                     <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
