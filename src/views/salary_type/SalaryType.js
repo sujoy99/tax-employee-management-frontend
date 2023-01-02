@@ -9,6 +9,7 @@ class SalaryTypeModel {
         this.salaryTypeName = "";
         this.studentTypeDescription = "";
         this.salaryTypes = [{name: ""}]
+
     }
 
     /**
@@ -22,6 +23,7 @@ class SalaryTypeModel {
         // obj.salaryTypeName = data.salaryTypeName ?? "";
         // obj.studentTypeDescription = data.studentTypeDescription ?? "";
         obj.salaryTypes = data.salaryTypes ?? [{name: ""}] 
+
         return obj;
     }
 

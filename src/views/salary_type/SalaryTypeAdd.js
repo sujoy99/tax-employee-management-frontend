@@ -1,5 +1,6 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
+
 import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
@@ -57,6 +58,7 @@ const SalaryTypeAdd = () => {
                 </Card.Body>
             </Card>
         </DefaultCard>
+
     )
 }
 
