@@ -7,5 +7,4 @@ const TextError = (props) => {
         </div>
     )
 }
-
 export default TextError

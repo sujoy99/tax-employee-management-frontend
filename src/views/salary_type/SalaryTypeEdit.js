@@ -9,29 +9,29 @@ import SalaryTypeForm from './SalaryTypeForm'
 import { SalaryType } from './SalaryType';
 import { Link } from 'react-router-dom';
 
-
-
-const SalaryTypeAdd = () => { 
+const SalaryTypeEdit = (props) => { console.log("P:", props)
+    // ${props.match.params.id}
+    // call find by id with parameter
 
     const cardProps = {
-        title: "Add New Student Type",
+        title: "Edit Student Type",
         headerSlot: () => (
             <>
-                <Link to='#'>
-                    <Button variant='link' className='f-right btn-sm p-1'>
-                        <FontAwesomeIcon icon={faList} className='me-2' />
-                        View Student Type List
+                <Link to='/portal/student-type'>
+                    <Button variant='link' className='f-right btn-sm p-5'>
+                        <FontAwesomeIcon icon={faList} className='me-2'/> View Student Type
+                        List
                     </Button>
                 </Link>
             </>
         ),
     };
 
+    const studentTypeEdit = [{"id": 1, "name": "abc"}, {"id": 2, "name": "def"}]
 
     const onSubmit = values => {
         console.log('Form data', values)
     }
-
 
     return (
         <DefaultCard className='mb-50' {...cardProps}>
@@ -42,11 +42,11 @@ const SalaryTypeAdd = () => {
                         {/* {loading && <ProgressBar />} */}
                         <div className="col-6">
                             <Formik
-                                initialValues={SalaryType}
+                                initialValues={SalaryType.fromJson(studentTypeEdit)}
                                 validationSchema={SalaryType.validator()}
                                 onSubmit={onSubmit}>
                                 {(props) => {
-                                    return <SalaryTypeForm formType="add" {...props} />;
+                                    return <SalaryTypeForm  {...props} />;
                                 }}
                             </Formik>
                         </div>
@@ -60,4 +60,4 @@ const SalaryTypeAdd = () => {
     )
 }
 
-export default SalaryTypeAdd;
+export default SalaryTypeEdit
