@@ -1,19 +1,17 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
-
 import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
-
 import DefaultCard from '../../components/card/default/DefaultCard'
 import SalaryTypeForm from './SalaryTypeForm'
-import { SalaryType } from './SalaryType';
+import { EmployeeSalary } from './EmployeeSalary';
 import { getSalaryObject } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 
 
-const SalaryTypeAdd = () => { 
+const EmployeeSalaryAdd = () => {
 
     const cardProps = {
         title: "Add New Student Type",
@@ -29,12 +27,10 @@ const SalaryTypeAdd = () => {
         ),
     };
 
-
     const onSubmit = values => {
         console.log(getSalaryObject(2022, 2023));
         console.log('Form data', values)
     }
-
 
     return (
         <DefaultCard className='mb-50' {...cardProps}>
@@ -45,11 +41,11 @@ const SalaryTypeAdd = () => {
                         {/* {loading && <ProgressBar />} */}
                         <div className="col-6">
                             <Formik
-                                initialValues={SalaryType}
-                                validationSchema={SalaryType.validator()}
+                                initialValues={EmployeeSalary}
+                                // validationSchema={SalaryType.validator()}
                                 onSubmit={onSubmit}>
                                 {(props) => {
-                                    return <SalaryTypeForm formType="add" {...props} />;
+                                    // return <SalaryTypeForm formType="add" {...props} />;
                                 }}
                             </Formik>
                         </div>
@@ -63,4 +59,4 @@ const SalaryTypeAdd = () => {
     )
 }
 
-export default SalaryTypeAdd;
+export default EmployeeSalaryAdd;

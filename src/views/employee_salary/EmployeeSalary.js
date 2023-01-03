@@ -1,14 +1,15 @@
 import * as Yup from 'yup';
 
-class SalaryTypeModel {
+class EmployeeSalaryModel {
 
     /**
      * Model properties
      */
     constructor() {
-        this.salaryTypeName = "";
-        this.studentTypeDescription = "";
-        this.salaryTypes = [{name: ""}]
+        this.employeeId = "";
+        this.taxYear = "";
+        this.taxAssesmentId = "";
+        this.lineItems = [{year: "", month: "", salaryTypeId: "", amount: "", isTotal: ""}]
     }
 
     /**
@@ -22,7 +23,6 @@ class SalaryTypeModel {
         // obj.salaryTypeName = data.salaryTypeName ?? "";
         // obj.studentTypeDescription = data.studentTypeDescription ?? "";
         obj.salaryTypes = data.salaryTypes ?? [{name: ""}] 
-
         return obj;
     }
 
@@ -59,4 +59,4 @@ class SalaryTypeModel {
 
 }
 
-export const SalaryType = new SalaryTypeModel();
+export const EmployeeSalary = new EmployeeSalaryModel();
