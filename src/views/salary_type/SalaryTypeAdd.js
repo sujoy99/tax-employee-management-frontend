@@ -9,6 +9,7 @@ import { faList } from "@fortawesome/free-solid-svg-icons";
 import DefaultCard from '../../components/card/default/DefaultCard'
 import SalaryTypeForm from './SalaryTypeForm'
 import { SalaryType } from './SalaryType';
+import { getSalaryObject } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 
 
@@ -30,6 +31,7 @@ const SalaryTypeAdd = () => {
 
 
     const onSubmit = values => {
+        console.log(getSalaryObject(2022, 2023));
         console.log('Form data', values)
     }
 
