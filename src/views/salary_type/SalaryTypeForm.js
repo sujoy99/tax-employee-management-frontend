@@ -54,7 +54,7 @@ const SalaryTypeForm = () => {
                         const { push, remove, form } = fieldArrayProps
                         const { values } = form
                         const { salaryTypes } = values
-                        
+                        const listLenght = salaryTypes.length
                         return (
                             <div >
                                 {
@@ -72,7 +72,7 @@ const SalaryTypeForm = () => {
                                                     />
                                                 </div>
                                                 <div className="col-4">
-                                                {index > 0 && (
+                                                {/* {index > 0 && (
                                                     <div className="d-inline mr-1">
                                                         <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
                                                         </button>
@@ -81,7 +81,30 @@ const SalaryTypeForm = () => {
                                                     )}
                                                     <div className="d-inline">
                                                     <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
-                                                    </div>
+                                                    </div> */}
+                                                      {
+                                                         ( index > 0 && listLenght -1 === index) && (
+                                                            <div className="d-inline mr-1">
+                                                                <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                    {
+                                                        (listLenght - 1 === index) && (
+                                                            <div className="d-inline">
+                                                                <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                    {
+                                                         ( listLenght - 1 > index) && (
+                                                            <div className="d-inline mr-1">
+                                                                <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
