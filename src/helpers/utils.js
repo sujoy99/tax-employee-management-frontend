@@ -30,7 +30,8 @@ export const getSalaryObject = (fromYear, toYear) => {
                 isTotal: false
             }
         });
-        result.push(subResult);
+        // result.push(subResult);
+        result.push({year: fromYear, month: month[monthIndex], list: subResult});
         monthIndex++;
 
         if(monthIndex === 12){
