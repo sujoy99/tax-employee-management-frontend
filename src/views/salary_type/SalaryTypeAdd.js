@@ -39,33 +39,11 @@ const SalaryTypeAdd = () => {
             if( res.data.status===200)
             {
                 Toaster.successToast(res.data.message);
-                //console.log("gfh",res);
-                //toast.success("Success!");}
-                // toast.success('🦄 Data Saved Successfully', {
-                //     position: "top-center",
-                //     autoClose: 2000,
-                //     hideProgressBar: false,
-                //     closeOnClick: true,
-                //     pauseOnHover: true,
-                //     draggable: true,
-                //     progress: undefined,
-                //     theme: "colored",
-                //     });
             }
         })
        .catch((error) => 
        {
         Toaster.errorToast(error.message)
-        // console.log("e", error)
-        // toast.error('data saved failed', {
-        // position: "top-center",
-        // autoClose: 2000,
-        // hideProgressBar: false,
-        // closeOnClick: true,
-        // pauseOnHover: true,
-        // draggable: true,
-        // progress: undefined,
-        // theme: "colored"})
     }
         )
         //console.log('Form data', values)
