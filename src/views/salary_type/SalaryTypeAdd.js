@@ -9,17 +9,23 @@ import SalaryTypeForm from './SalaryTypeForm'
 import { SalaryType } from './SalaryType';
 import { Link } from 'react-router-dom';
 
+import Axios from 'axios';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import {Toaster} from '../../components/toaster/Toaster'
 
 const SalaryTypeAdd = () => {
 
     const cardProps = {
-        title: "Add New Student Type",
+        title: "Add New Salary Type",
         headerSlot: () => (
             <>
                 <Link to='#'>
                     <Button variant='link' className='f-right btn-sm p-1'>
                         <FontAwesomeIcon icon={faList} className='me-2' />
-                        View Student Type List
+                        View Salary Type List
                     </Button>
                 </Link>
             </>
@@ -27,8 +33,44 @@ const SalaryTypeAdd = () => {
     };
 
     const onSubmit = values => {
-        console.log('Form data', values)
+        const url = "http://localhost:8080/salary-type/save"
+        Axios.post(url, values.salaryTypes)
+        .then((res) => { console.log(res);
+            if( res.data.status===200)
+            {
+                Toaster.successToast(res.data.message);
+                //console.log("gfh",res);
+                //toast.success("Success!");}
+                // toast.success('🦄 Data Saved Successfully', {
+                //     position: "top-center",
+                //     autoClose: 2000,
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                //     theme: "colored",
+                //     });
+            }
+        })
+       .catch((error) => 
+       {
+        Toaster.errorToast(error.message)
+        // console.log("e", error)
+        // toast.error('data saved failed', {
+        // position: "top-center",
+        // autoClose: 2000,
+        // hideProgressBar: false,
+        // closeOnClick: true,
+        // pauseOnHover: true,
+        // draggable: true,
+        // progress: undefined,
+        // theme: "colored"})
     }
+        )
+        //console.log('Form data', values)
+    }
+
 
     return (
         <DefaultCard className='mb-50' {...cardProps}>

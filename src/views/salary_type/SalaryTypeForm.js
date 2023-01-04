@@ -7,7 +7,11 @@ import { Link } from 'react-router-dom';
 
 import FormikControl from '../../components/form/FormikControl'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SalaryTypeForm = () => {
+    
 
     // return (
     //     <Form>
@@ -92,6 +96,7 @@ const SalaryTypeForm = () => {
                                     <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
                                         <FontAwesomeIcon icon={faSave} className='me-2'/> Submit
                                     </Button>
+                                    
                                     <Button variant='white' className='f-right mr-10 btn-sm btn-secondary mx-2' type='reset'>
                                         <FontAwesomeIcon icon={faUndo} className='me-2'/> Reset
                                     </Button>
@@ -99,6 +104,7 @@ const SalaryTypeForm = () => {
                                         <Button variant='white' className='f-right mr-10 btn-sm btn-danger' type='cancle'>
                                             <FontAwesomeIcon icon={faTimes} className='me-2'/> Cancel
                                         </Button>
+                                        <ToastContainer />
                                     </Link>
                                 </Col>
                             </div>
