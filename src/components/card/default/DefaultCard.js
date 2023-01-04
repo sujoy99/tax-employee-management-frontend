@@ -18,10 +18,6 @@ export default function DefaultCard(props) {
     <Card
       border="light"
       className="bg-white shadow-sm  pspacer"
-<<<<<<< HEAD
-=======
-      className={height ?? "hight93"}
->>>>>>> salary type ui
     >
       <Card.Header className="p-10">
         <h6 className="mb-0 mt-9 f-left pl-10">{title}</h6>
