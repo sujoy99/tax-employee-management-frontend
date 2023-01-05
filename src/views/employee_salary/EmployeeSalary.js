@@ -11,6 +11,7 @@ class EmployeeSalaryModel {
         this.taxAssesmentId = "";
         // this.lineItems = [{ year: "", month: "", salaryTypeId: "", amount: "", isTotal: "" }]
         this.lineItems = []
+        this.salaryPerMonth = [];
     }
 
     /**

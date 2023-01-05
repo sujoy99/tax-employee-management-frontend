@@ -1,4 +1,4 @@
-export const getSalaryObject = (fromYear, toYear) => {
+export const getSalaryObject = (fromYear, toYear, values) => {
     let result = [];
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const salaryTypeList = [
@@ -17,18 +17,21 @@ export const getSalaryObject = (fromYear, toYear) => {
     ];
 
     let monthIndex = 6;
+    values.lineItems = [];
     while(fromYear <= toYear){
         if(monthIndex === 6 && fromYear === toYear){
             break;
         }
         let subResult = salaryTypeList.map((obj, idx)=>{
-            return {
+            let currObj = {
                 year: fromYear,
                 month: monthIndex,
                 salaryTypeId: obj.id,
                 amount: 0,
                 isTotal: false
-            }
+            };
+            values.lineItems.push(currObj);
+            return currObj;
         });
         // result.push(subResult);
         result.push({year: fromYear, month: month[monthIndex], list: subResult});
@@ -39,6 +42,6 @@ export const getSalaryObject = (fromYear, toYear) => {
             fromYear = toYear;
         }
     }
-
+    console.log("res", result);
     return result;
 }
