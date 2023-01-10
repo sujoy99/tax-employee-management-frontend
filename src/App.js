@@ -4,6 +4,7 @@ import ProgressBar from "react-topbar-progress-indicator";
 
 import { authRoutes } from './routes';
 import SiteRoutes from './components/routes/SiteRoutes';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
