@@ -24,7 +24,7 @@ export const getSalaryObject = (fromYear, toYear, values) => {
         }
         let subResult = salaryTypeList.map((obj, idx)=>{
             let currObj = {
-                year: fromYear,
+                // year: fromYear,
                 month: monthIndex,
                 salaryTypeId: obj.id,
                 amount: 0,
@@ -42,6 +42,22 @@ export const getSalaryObject = (fromYear, toYear, values) => {
             fromYear = toYear;
         }
     }
-    console.log("res", result);
+    // for total
+    // let subResult = salaryTypeList.map((obj, idx)=>{
+    //     let currObj = {
+    //         year: null,
+    //         month: null,
+    //         salaryTypeId: obj.id,
+    //         amount: 0,
+    //         isTotal: true
+    //     };
+    //     values.lineItems.push(currObj);
+    //     return currObj;
+    // });
+    
+    // result.push({'title': 'Total', list: [  subResult]});
+    // console.log("res", result);
+    // console.log("sub", subResult);
+    // console.log("v", values);
     return result;
 }

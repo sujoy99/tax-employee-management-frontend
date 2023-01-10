@@ -1,8 +1,11 @@
 import * as React from "react";
-import { Button, Card, Col, Form, InputGroup, Nav, Row, Table, } from "react-bootstrap";
+import { useState } from 'react';
+import { Button, Card, Col, InputGroup, Nav, Row, Table, } from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
 import Pagination from "react-js-pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+// import Pagination from '../pagination/Pagination';
 const BasicTable = (props) => {
     const {
         headers,
@@ -16,6 +19,12 @@ const BasicTable = (props) => {
         children,
     } = props;
 
+    const [searchKeyValue, setSearchKeyValue] = useState("");
+
+    const onSearchKeyValue = () => {
+        return onSearch(searchKeyValue);
+    };
+
     return (
         <>
             <Card border="white" className="table-wrapper ">
@@ -23,7 +32,7 @@ const BasicTable = (props) => {
                     <div className="table-settings d-block mb-15">
                         <Row className="justify-content-between align-items-center">
                             {/* IF need to use table without search and pagination */}
-                            {/* {perPage ? (
+                            {perPage ? (
                                 <>
                                     <Col xs={8} md={6} lg={6} xl={4}>
                                         <InputGroup>
@@ -41,7 +50,7 @@ const BasicTable = (props) => {
                                                 }}
 
                                             />
-                                            <Button className="btn btn-primary" 
+                                            <Button className="btn btn-primary"
                                             // onClick={() => onSearchKeyValue()}
                                             >Search</Button>
                                         </InputGroup>
@@ -50,8 +59,8 @@ const BasicTable = (props) => {
                                     <Col xs={4} md={4} lg={2} xl={2} className="ps-md-0 text-end">
                                         <Form>
                                             <Form.Group className="mb-3">
-                                                <Form.Select
-                                                    // onChange={(e) => onSizeChange(e.target.value)}
+                                                <Form.Control as="select"
+                                                // onChange={(e) => onSizeChange(e.target.value)}
                                                 >
                                                     <option defaultValue>Show</option>
                                                     {perPage.map((size, index) => (
@@ -59,14 +68,14 @@ const BasicTable = (props) => {
                                                             {size}
                                                         </option>
                                                     ))}
-                                                </Form.Select>
+                                                </Form.Control>
                                             </Form.Group>
                                         </Form>
                                     </Col>
                                 </>
                             ) : (
                                     ""
-                                )} */}
+                                )}
                         </Row>
                     </div>
 
@@ -101,7 +110,7 @@ const BasicTable = (props) => {
                         </Table>
                     </div>
                     {/* IF need to use table without meta data and pagination */}
-                    {/* {meta ? (
+                    {meta ? (
                         <Card.Footer className="px-0 border-0 d-lg-flex align-items-center justify-content-between pb-0">
                             <Nav>
                                 <Pagination
@@ -112,7 +121,7 @@ const BasicTable = (props) => {
                                     itemsCountPerPage={meta.size}
                                     totalItemsCount={meta.total}
                                     pageRangeDisplayed={10}
-                                    // onChange={(page) => onPageChange(page)}
+                                    onChange={(page) => onPageChange(page)}
                                 />
                             </Nav>
                             <small className="fw-bold">
@@ -120,9 +129,12 @@ const BasicTable = (props) => {
                                 out of <b>{meta.total}</b> entries
                             </small>
                         </Card.Footer>
+                        // <Card.Footer>
+                        //     <Pagination />
+                        // </Card.Footer>
                     ) : (
                             ""
-                        )} */}
+                        )}
                 </Card.Body>
             </Card>
         </>
