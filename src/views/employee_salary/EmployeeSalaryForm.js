@@ -17,10 +17,10 @@ const EmployeeSalaryForm = (props) => {
     let count = 0;
 
     const dropdownOptions = [
-        { key: 'Select an option', value: '' },
-        { key: '2021-2022', value: '2021-2022' },
-        { key: '2022-2023', value: '2022-2023' },
-        { key: '2023-2024', value: '2023-2024' }
+        { name: 'Select an option', value: '' },
+        { name: '2021-2022', value: '2021-2022' },
+        { name: '2022-2023', value: '2022-2023' },
+        { name: '2023-2024', value: '2023-2024' }
     ]
 
     const salaryTypeList = [
@@ -64,13 +64,6 @@ const EmployeeSalaryForm = (props) => {
             { id: "medical", label: "Medical" },
             // {id: "action", label: "Action", width: "120px"},
         ],
-        perPage: [10, 20, 30, 40, 50],
-        // config: {
-        //     operationId: UrlBuilder.api(`student-type/list?page=${page}&size=${size}`),
-        //     output: "studentTypeList",
-        //     storeName: "studentTypeList"
-        // },
-        meta: {},
     };
 
 

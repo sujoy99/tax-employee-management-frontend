@@ -2,10 +2,10 @@ import * as React from "react";
 import { useState } from 'react';
 import { Button, Card, Col, InputGroup, Nav, Row, Table, } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import Pagination from "react-js-pagination";
+// import Pagination from "react-js-pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-// import Pagination from '../pagination/Pagination';
+import Pagination from '../pagination/Pagination';
 const BasicTable = (props) => {
     const {
         headers,
@@ -17,7 +17,9 @@ const BasicTable = (props) => {
         totalData,
         onSearch,
         children,
+        setCurrentPage,
     } = props;
+    console.log("meta basic::", props);
 
     const [searchKeyValue, setSearchKeyValue] = useState("");
 
@@ -60,7 +62,12 @@ const BasicTable = (props) => {
                                         <Form>
                                             <Form.Group className="mb-3">
                                                 <Form.Control as="select"
-                                                // onChange={(e) => onSizeChange(e.target.value)}
+                                                onChange={
+                                                    (e) => 
+                                                    // onSizeChange(e.target.value)
+                                                    console.log("duk", e.target.value)
+
+                                                }
                                                 >
                                                     <option defaultValue>Show</option>
                                                     {perPage.map((size, index) => (
@@ -111,27 +118,27 @@ const BasicTable = (props) => {
                     </div>
                     {/* IF need to use table without meta data and pagination */}
                     {meta ? (
-                        <Card.Footer className="px-0 border-0 d-lg-flex align-items-center justify-content-between pb-0">
-                            <Nav>
-                                <Pagination
-                                    innerClass="pagination"
-                                    itemClass="page-item"
-                                    linkClass="page-link"
-                                    activePage={meta.currentPage}
-                                    itemsCountPerPage={meta.size}
-                                    totalItemsCount={meta.total}
-                                    pageRangeDisplayed={10}
-                                    onChange={(page) => onPageChange(page)}
-                                />
-                            </Nav>
-                            <small className="fw-bold">
-                                Showing <b>{meta.size > meta.total ? meta.total : totalData >= meta.size ? (totalData * meta.currentPage) : (meta.size * meta.currentPage - (meta.size - totalData))}</b>{" "}
-                                out of <b>{meta.total}</b> entries
-                            </small>
-                        </Card.Footer>
-                        // <Card.Footer>
-                        //     <Pagination />
+                        // <Card.Footer className="px-0 border-0 d-lg-flex align-items-center justify-content-between pb-0">
+                        //     <Nav>
+                        //         <Pagination
+                        //             innerClass="pagination"
+                        //             itemClass="page-item"
+                        //             linkClass="page-link"
+                        //             activePage={meta.currentPage}
+                        //             itemsCountPerPage={meta.size}
+                        //             totalItemsCount={meta.total}
+                        //             pageRangeDisplayed={10}
+                        //             onChange={(page) => onPageChange(page)}
+                        //         />
+                        //     </Nav>
+                        //     <small className="fw-bold">
+                        //         Showing <b>{meta.size > meta.total ? meta.total : totalData >= meta.size ? (totalData * meta.currentPage) : (meta.size * meta.currentPage - (meta.size - totalData))}</b>{" "}
+                        //         out of <b>{meta.total}</b> entries
+                        //     </small>
                         // </Card.Footer>
+                        <Card.Footer>
+                            <Pagination meta={meta} setCurrentPage={setCurrentPage} />
+                        </Card.Footer>
                     ) : (
                             ""
                         )}

@@ -2,10 +2,15 @@ import React, {useState, useEffect} from 'react'
 import { Button, Card, Col, Form, InputGroup, Nav, Row, FormControl, } from "react-bootstrap";
 
 const Pagination = (props) => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const [usersPerPage, setUsersPerPage] = useState(10)
-    const [pageNo, setPageNo] = useState(0)
-    const totalPages = pageNo;
+    console.log("props", props)
+    const {currentPage,pageNo, totalPages, setCurrentPage, ...rest} = props.meta;
+
+    console.log("currentPage::", currentPage);
+    console.log("total", pageNo)
+    console.log("")
+    
+    // const [pageNo, setPageNo] = useState(0)
+    // const totalPages = pageNo;
 
     const pageNumCss = {
         width: "45px",
@@ -39,7 +44,7 @@ const Pagination = (props) => {
     };
 
 
-    const nextPage = () => {
+    const nextPage = () => { console.log("d")
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1)
             // setIsLoading(true)
@@ -47,7 +52,7 @@ const Pagination = (props) => {
     };
 
     return (
-        <>
+        <div className='mb-5'>
                 <div style={{ "float": "left" }}>
                     Showing Page {currentPage} of {totalPages}
                 </div>
@@ -87,7 +92,7 @@ const Pagination = (props) => {
 
                     </InputGroup>
                 </div>
-        </>
+        </div>
     )
 }
 
