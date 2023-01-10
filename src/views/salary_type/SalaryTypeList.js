@@ -1,14 +1,28 @@
-import React,{useEffect} from 'react'
-import axiosService from '../../helpers/axiosService'
+import React from 'react'
+import DefaultCard from '../../components/card/default/DefaultCard'
+import { Card, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
+
 
 const SalaryTypeList = () => {
-    useEffect(()=> {
-        axiosService.get('http://localhost:8080/salary-type/list','').then(response => console.log("s", response));
-    },[])
+
+    const cardProps = {
+        title: "Manage Salary Type",
+        headerSlot: () => (
+            <>
+                
+                <button type="button" class="btn btn-outline-success ">Add Salary Type</button>
+                 
+            </>
+        ),
+    };
     return (
-        <div>
-            <h1>This is Salaty Type list</h1>
-        </div>
+        <>
+            <DefaultCard className='mb-50'  {...cardProps}>
+            </DefaultCard>
+        </>
     )
 }
 

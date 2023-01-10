@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 const SalaryTypeAdd = () => { 
 
     const cardProps = {
-        title: "Add New Student Type",
+        title: "Manage Salary Type",
         headerSlot: () => (
             <>
                 <Link to='#'>
