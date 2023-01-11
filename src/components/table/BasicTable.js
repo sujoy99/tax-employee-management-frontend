@@ -16,19 +16,13 @@ const BasicTable = (props) => {
         onPageChange,
         totalData,
         // onSearch,
-        onSearchByValue,
+        onChangeSearchValue,
         children,
-        setCurrentPage,
-        searchVal,
+        setCurrentPage
     } = props;
     console.log("meta basic::", props);
 
-    const [searchKeyValue, setSearchKeyValue] = useState("");
-
-    const onSearchKeyValue = () => {
-        return onSearchByValue(searchKeyValue);
-    };
-
+    const [searchValue, setSearchValue] = useState("")
     return (
         <>
             <Card border="white" className="table-wrapper ">
@@ -39,27 +33,24 @@ const BasicTable = (props) => {
                             {perPage ? (
                                 <>
                                     <Col xs={8} md={6} lg={6} xl={4}>
-                                        <InputGroup>
-                                            <InputGroup.Text>
-                                                <FontAwesomeIcon icon={faSearch} />
-                                            </InputGroup.Text>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Search"
-                                                onChange={(e) => setSearchKeyValue(e.target.value)}
-                                                onKeyUp={(e) => {
-                                                    // if (e.keyCode === 13) {
-                                                    //     onSearchKeyValue();
-                                                    // }
-                                                    onSearchKeyValue();
-                                                }}
-                                                value={searchVal}
-
-                                            />
-                                            <Button className="btn btn-primary"
-                                            onClick={() => onSearchKeyValue()}
-                                            >Search</Button>
-                                        </InputGroup>
+                                        <Form>
+                                            <InputGroup>
+                                                <InputGroup.Text>
+                                                    <FontAwesomeIcon icon={faSearch} />
+                                                </InputGroup.Text>
+                                                <Form.Control
+                                                    as="input"
+                                                    type="text"
+                                                    placeholder="Search"
+                                                    onChange={(e) => setSearchValue(e.target.value)}                                             
+                                                    value={searchValue}
+                                                    
+                                                    />
+                                                <Button className="btn btn-primary"
+                                                onClick={() => onChangeSearchValue(searchValue)}
+                                                >Search</Button>
+                                            </InputGroup>
+                                        </Form>
                                     </Col>
 
                                     <Col xs={4} md={4} lg={2} xl={2} className="ps-md-0 text-end">
