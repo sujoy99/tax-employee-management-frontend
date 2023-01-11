@@ -19,6 +19,7 @@ const BasicTable = (props) => {
         onSearchByValue,
         children,
         setCurrentPage,
+        searchVal,
     } = props;
     console.log("meta basic::", props);
 
@@ -52,6 +53,7 @@ const BasicTable = (props) => {
                                                     // }
                                                     onSearchKeyValue();
                                                 }}
+                                                value={searchVal}
 
                                             />
                                             <Button className="btn btn-primary"

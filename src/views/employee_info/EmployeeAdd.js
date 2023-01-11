@@ -32,10 +32,10 @@ const EmployeeAdd = () => {
         title: "Add New Employee ",
         headerSlot: () => (
             
-                <Link to='#'>
+                <Link to='/employee'>
                     <Button variant='link' className='f-right btn-sm p-1'>
                         <FontAwesomeIcon icon={faList} className='me-2' />
-                        View Student Type List
+                        View Employee List
                     </Button>
                 </Link>
             

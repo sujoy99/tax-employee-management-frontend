@@ -37,12 +37,12 @@ const EmployeeList = () => {
     };
 
     const cardProps = {
-        title: "Student Type List",
+        title: "Employee List",
         headerSlot: () => (
             <>
-                <Link to='/portal/student-type/add'>
+                <Link to='/employee/add'>
                     <Button variant='link' className='f-right btn-sm btn-color'>
-                        <FontAwesomeIcon icon={faPlus} className='me-2' /> Add New Student Type
+                        <FontAwesomeIcon icon={faPlus} className='me-2' /> Add New Employee
                     </Button>
                 </Link>
             </>
@@ -61,34 +61,34 @@ const EmployeeList = () => {
         setSearchVal(searchVal);
     };
 
-    const fetchData = useCallback(async () => {
-        const response = await axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`);
-        console.log("response  :: ", response);
-        let meta = response.data.meta;
-        console.log("metaas", tableProps)
-        setMeta(meta)
-        setEmployees(response.data.list);
-        setIsLoading(false);
-        setPageNo(meta.totalPages);
-        console.log("ok", tableProps);
-    }, [currentPage, limit, searchVal])
-
-    useEffect(() => {
-        fetchData()
-    }, [fetchData])
-
-    // useEffect( () => {
-    //     setIsLoading(true);
-    //     axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
-    //         let meta = response.data.meta;            
-    //         setMeta(meta)
-    //         setEmployees(response.data.list);
-    //         setIsLoading(false);
-    //         setPageNo(meta.totalPages);
-    //         // debugger
-
-    //     });
+    // const fetchData = useCallback(async () => {
+    //     const response = await axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`);
+    //     console.log("response  :: ", response);
+    //     let meta = response.data.meta;
+    //     console.log("metaas", tableProps)
+    //     setMeta(meta)
+    //     setEmployees(response.data.list);
+    //     setIsLoading(false);
+    //     setPageNo(meta.totalPages);
+    //     console.log("ok", tableProps);
     // }, [currentPage, limit, searchVal])
+
+    // useEffect(() => {
+    //     fetchData()
+    // }, [fetchData])
+
+    useEffect( () => {
+        setIsLoading(true);
+        axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+            let meta = response.data.meta;            
+            setMeta(meta)
+            setEmployees(response.data.list);
+            setIsLoading(false);
+            setPageNo(meta.totalPages);
+            // debugger
+
+        });
+    }, [currentPage, limit, searchVal])
 
     tableProps.meta = {...meta, setCurrentPage};
 
