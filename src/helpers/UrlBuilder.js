@@ -5,7 +5,8 @@ class UrlBuilderHelper {
     }
 
     taxEmployeeManagementApi(path) {
-        return `http://localhost:8005/api/v1/${path}`;
+        // return `http://localhost:8005/api/v1/${path}`;
+        return `http://10.0.2.230:8080/${path}`;
     };
 }
 

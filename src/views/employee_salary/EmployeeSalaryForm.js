@@ -1,76 +1,126 @@
-import React from 'react'
-import { Formik, Form, FieldArray, ErrorMessage, Field } from 'formik'
+import React, { useEffect, useMemo } from 'react'
+import { Formik, Form, FieldArray, ErrorMessage, Field, useFormikContext } from 'formik'
 import { Navbar, Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTimes, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 
 import FormikControl from '../../components/form/FormikControl'
+import BasicTable from '../../components/table/BasicTable';
 import EmployeeSalaryTable from './EmployeeSalaryTable';
+import { getSalaryObject } from '../../helpers/utils';
 
 const EmployeeSalaryForm = (props) => {
     console.log("p:", props)
-    const { onChangeTaxYear, values, setValues, ...rest } = props
+    const { onChangeTaxYear, values, setValues, setFieldValue, ...rest } = props
+
+    let count = 0;
 
     const dropdownOptions = [
-        { key: 'Select an option', value: '' },
-        { key: '2021-2022', value: '2021-2022' },
-        { key: '2022-2023', value: '2022-2023' },
-        { key: '2023-2024', value: '2023-2024' }
+        { name: 'Select an option', value: '' },
+        { name: '2021-2022', value: '2021-2022' },
+        { name: '2022-2023', value: '2022-2023' },
+        { name: '2023-2024', value: '2023-2024' }
     ]
+
+    const salaryTypeList = [
+        {
+            id: 1,
+            name: 'Basic'
+        },
+        {
+            id: 2,
+            name: 'House Rent'
+        },
+        {
+            id: 3,
+            name: 'Medical'
+        }
+    ];
+
+    useEffect(() => {
+        //Runs only on the first render
+        if (values.taxYear) {
+            const [fromYear, toYear] = values.taxYear.split('-');
+
+            const salaryPerMonth = getSalaryObject(fromYear, toYear, values);
+
+            setValues({ ...values, salaryPerMonth });
+            // setIsLoading(false);
+
+
+            // call formik onChange method
+            // field.onChange(e);
+        } else {
+            setValues({ ...values, salaryPerMonth: [] });
+        }
+    }, [values.taxYear]);
+
+    const tableProps = {
+        headers: [
+            { id: "id", label: "#" },
+            { id: "basic", label: "Basic" },
+            { id: "houseRent", label: "House Rent" },
+            { id: "medical", label: "Medical" },
+            // {id: "action", label: "Action", width: "120px"},
+        ],
+    };
+
+
 
     return (
         <Form className="form-horizontal">
             <FormikControl
                 control='select'
-                label='Select a topic'
-                name='selectOption'
+                label='Select Tax Year'
+                name='taxYear'
                 className='form-control'
                 options={dropdownOptions}
-                onChange={e => onChangeTaxYear(e, values, setValues)}
             />
 
-            <FieldArray name="lineItems">
-                {
+            {
+                values.salaryPerMonth.length > 0 && (
+                    <BasicTable
+                        {...tableProps}
+                    >
+                        {values.salaryPerMonth.length > 0 &&
+                            JSON.parse(JSON.stringify(values.salaryPerMonth)).map((row, rowIndex) => (
 
-                    // (fieldArrayProps) => (
-                    //     <EmployeeSalaryTable
-                    //     name="lineItems"
-                    //   />
-                    // )
+                                <tr key={rowIndex} >
+                                    <td>
+                                        <span className='fw-normal'>{row.year + "-" + row.month}</span>
+                                    </td>
+                                    {
+                                        JSON.parse(JSON.stringify(row.list)).map((col, colIndex) => {
 
-                    (fieldArrayProps) => {
-                        const { push, remove, form } = fieldArrayProps
-                        const { values } = form
-                        const { lineItems } = values
-                        const listLenght = lineItems.length
+                                            // TODO: SHOULD BY DYNAMIC
+                                            let index = rowIndex * 3 + colIndex;
 
-                        return (
-                            <div >
-                                {
-                                    lineItems.map((lineItem, index) => (
-                                        <div key={index} className="container">
-                                            <div className="row">
-                                                <div className="col-8">
+                                            return (
+                                                <td key={colIndex}>
                                                     <FormikControl
                                                         control='input'
                                                         type='text'
-                                                        label={`Name(${index + 1})`}
-                                                        name={`salaryTypes[${index}].name`}
+                                                        name={` values.lineItems[${index}].amount`}
                                                         className='form-control'
                                                         placeHolder='Enter Salary Type'
+                                                        value={col.amount}
+                                                        isStyle='false'
                                                     />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                               
-                            </div>
-                        )
-                    }
-                }
-            </FieldArray>
+
+                                                </td>
+                                            )
+                                        })
+                                    }
+                                </tr>
+                            ))}
+                    </BasicTable>
+                )
+            }
+
+            {/* <pre>{JSON.stringify(values, undefined, 2)}</pre> */}
+
+
             {/* <Col md={12} className='mb-10 mt-10 ml-5'>
                 <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
                     <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
@@ -84,7 +134,7 @@ const EmployeeSalaryForm = (props) => {
                     </Button>
                 </Link>
             </Col> */}
-        </Form>
+        </Form >
     )
 }
 

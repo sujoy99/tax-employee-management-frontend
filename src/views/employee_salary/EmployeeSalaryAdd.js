@@ -1,5 +1,5 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
+import React, {useState, useEffect} from 'react'
+import { Formik, useFormikContext } from 'formik'
 import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,9 @@ import { Link } from 'react-router-dom';
 
 
 const EmployeeSalaryAdd = () => {
+
+    const [isLoading, setIsLoading] = useState(true)
+    
 
     const cardProps = {
         title: "Add New Student Type",
@@ -32,31 +35,18 @@ const EmployeeSalaryAdd = () => {
         console.log('Form data', values)
     }
 
-    const onChangeTaxYear = (e, values, setValues) => {
-            console.log("hello", e.target.value)
-            console.log("hi:", values);
+    const onChangeTaxYear = (e, values, setValues, setFieldValue) => {
+            
             if(e.target.value){
                 const [fromYear, toYear] = e.target.value.split('-');
 
-
-                // update dynamic form
-                // const tickets = [...values.lineItems];
-                // const numberOfTickets = e.target.value || 0;
-                // const previousNumber = parseInt(field.value || '0');
-                // if (previousNumber < numberOfTickets) {
-                //     for (let i = previousNumber; i < numberOfTickets; i++) {
-                //         tickets.push({ name: '', email: '' });
-                //     }
-                // } else {
-                //     for (let i = previousNumber; i >= numberOfTickets; i--) {
-                //         tickets.splice(i, 1);
-                //     }
-                // }
-                // setValues({ ...values, tickets });
-
                 const lineItems = getSalaryObject(fromYear, toYear);
 
+                setFieldValue("taxYear", e.target.value)
                 setValues({ ...values, lineItems });
+                setIsLoading(false);
+
+                
 
                 // call formik onChange method
                 // field.onChange(e);
@@ -71,9 +61,9 @@ const EmployeeSalaryAdd = () => {
             <Card border='white' className='table-wrapper table-responsive'>
                 <Card.Body className="shadow p-3 mb-5 bg-white rounded container">
                     <div className="row">
-                    <div className="col-3"></div>
+                    <div className="col-1"></div>
                         {/* {loading && <ProgressBar />} */}
-                        <div className="col-6">
+                        <div className="col-10">
                             <Formik
                                 initialValues={EmployeeSalary}
                                 // validationSchema={SalaryType.validator()}
@@ -84,7 +74,7 @@ const EmployeeSalaryAdd = () => {
                             </Formik>
                         </div>
 
-                        <div className="col-3"></div>
+                        <div className="col-1"></div>
                     </div>
 
                 </Card.Body>

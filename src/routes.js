@@ -24,7 +24,11 @@ const SalaryTypeEdit = React.lazy(() => import("./views/salary_type/SalaryTypeEd
 const EmployeeSalaryAdd = React.lazy(() => import("./views/employee_salary/EmployeeSalaryAdd"));
 
 //Employee
+const EmployeeList = React.lazy(() => import("./views/employee_info/EmployeeList"));
 const EmployeeAdd = React.lazy(() => import("./views/employee_info/EmployeeAdd"));
+
+const UserList = React.lazy(() => import("./views/user/UserList"))
+
 
 const authRoutes = [
     { path: "/login", name: "Login", component: <Login /> },
@@ -43,6 +47,9 @@ const siteRoutes = [
 
     //employee Info
     { path: "/employee/add", name: "EmployeeAdd", component: <EmployeeAdd /> },
+    { path: "/employee", name: "EmployeeList", component: <EmployeeList /> },
+    // user
+    { path: "/user/list", name: "UserList", component: <UserList /> },
   
   ];
 
