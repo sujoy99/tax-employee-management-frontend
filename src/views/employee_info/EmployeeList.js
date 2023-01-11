@@ -17,6 +17,7 @@ const EmployeeList = () => {
     const [pageNo, setPageNo] = useState(1);
     const [isLoading, setIsLoading] = useState(true)
     const [meta, setMeta] = useState({})
+    const [searchVal, setSearchVal] = useState('')
 
     const tableProps = {
         headers: [
@@ -48,34 +49,46 @@ const EmployeeList = () => {
         ),
     };
 
-    // const fetchData = useCallback(async () => {
-    //     const response = await axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}`);
-    //     console.log("response  :: ", response);
-    //     let meta = response.data.meta;
-    //     console.log("metaas", tableProps)
-    //     setMeta(meta)
-    //     setEmployees(response.data.list);
-    //     setIsLoading(false);
-    //     setPageNo(meta.totalPages);
-    //     console.log("ok", tableProps);
-    // }, [currentPage, isLoading])
+    const onSizeChange = (pageSize) => {
+        // setSize(pageSize);
+        setLimit(pageSize);
 
-    // useEffect(() => {
-    //     fetchData()
-    // }, [fetchData])
+    };
 
-    useEffect( () => {
-        setIsLoading(true);
-        axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}`).then(response => {           
-            let meta = response.data.meta;            
-            setMeta(meta)
-            setEmployees(response.data.list);
-            setIsLoading(false);
-            setPageNo(meta.totalPages);
-            // debugger
+    
+    const onSearchByValue = (searchVal) => {
+        console.log(" search value : ", searchVal)
+        setSearchVal(searchVal);
+    };
 
-        });
-    }, [currentPage, limit])
+    const fetchData = useCallback(async () => {
+        const response = await axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`);
+        console.log("response  :: ", response);
+        let meta = response.data.meta;
+        console.log("metaas", tableProps)
+        setMeta(meta)
+        setEmployees(response.data.list);
+        setIsLoading(false);
+        setPageNo(meta.totalPages);
+        console.log("ok", tableProps);
+    }, [currentPage, limit, searchVal])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
+
+    // useEffect( () => {
+    //     setIsLoading(true);
+    //     axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+    //         let meta = response.data.meta;            
+    //         setMeta(meta)
+    //         setEmployees(response.data.list);
+    //         setIsLoading(false);
+    //         setPageNo(meta.totalPages);
+    //         // debugger
+
+    //     });
+    // }, [currentPage, limit, searchVal])
 
     tableProps.meta = {...meta, setCurrentPage};
 
@@ -86,6 +99,8 @@ const EmployeeList = () => {
             {isLoading && <ProgressBar />}
             <BasicTable 
                 {...tableProps}
+                onSizeChange={(pageSize) => onSizeChange(pageSize)}
+                onSearchByValue = {(searchVal) => onSearchByValue(searchVal)}
             >
                 {employees !== undefined &&
                     JSON.parse(JSON.stringify(employees)).map((row, rowIndex) => (

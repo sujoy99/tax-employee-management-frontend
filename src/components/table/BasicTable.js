@@ -15,7 +15,8 @@ const BasicTable = (props) => {
         meta,
         onPageChange,
         totalData,
-        onSearch,
+        // onSearch,
+        onSearchByValue,
         children,
         setCurrentPage,
     } = props;
@@ -24,7 +25,7 @@ const BasicTable = (props) => {
     const [searchKeyValue, setSearchKeyValue] = useState("");
 
     const onSearchKeyValue = () => {
-        return onSearch(searchKeyValue);
+        return onSearchByValue(searchKeyValue);
     };
 
     return (
@@ -44,16 +45,17 @@ const BasicTable = (props) => {
                                             <Form.Control
                                                 type="text"
                                                 placeholder="Search"
-                                                // onChange={(e) => setSearchKeyValue(e.target.value)}
+                                                onChange={(e) => setSearchKeyValue(e.target.value)}
                                                 onKeyUp={(e) => {
-                                                    if (e.keyCode === 13) {
-                                                        // onSearchKeyValue();
-                                                    }
+                                                    // if (e.keyCode === 13) {
+                                                    //     onSearchKeyValue();
+                                                    // }
+                                                    onSearchKeyValue();
                                                 }}
 
                                             />
                                             <Button className="btn btn-primary"
-                                            // onClick={() => onSearchKeyValue()}
+                                            onClick={() => onSearchKeyValue()}
                                             >Search</Button>
                                         </InputGroup>
                                     </Col>
@@ -64,8 +66,7 @@ const BasicTable = (props) => {
                                                 <Form.Control as="select"
                                                 onChange={
                                                     (e) => 
-                                                    // onSizeChange(e.target.value)
-                                                    console.log("duk", e.target.value)
+                                                    onSizeChange(e.target.value)
 
                                                 }
                                                 >
