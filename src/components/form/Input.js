@@ -16,12 +16,7 @@ const Input = (props) => {
   return (
     
     <div className='form-group row'>
-      {
-        label ? (
-          <label htmlFor={name} className="control-label col-sm-4 font-weight-bold">{label}</label>
-        ) : ""
-      }
-      
+      <label htmlFor={name} className="control-label col-sm-4 font-weight-bold">{label} </label>
       <div className="col-sm-8">
         <Field id={name} name={name} placeholder={placeHolder} {...rest} />
         <ErrorMessage component={TextError} name={name} />

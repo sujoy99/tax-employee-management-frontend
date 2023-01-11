@@ -27,8 +27,12 @@ const EmployeeSalaryAdd = React.lazy(() => import("./views/employee_salary/Emplo
 const EmployeeList = React.lazy(() => import("./views/employee_info/EmployeeList"));
 const EmployeeAdd = React.lazy(() => import("./views/employee_info/EmployeeAdd"));
 
+<<<<<<< HEAD
 const UserList = React.lazy(() => import("./views/user/UserList"))
 
+=======
+const SalaryStructureAdd = React.lazy(() => import("./views/salary_structure/SalaryStructureAdd"));
+>>>>>>> dfeaeea (salary structure module implemented)
 
 const authRoutes = [
     { path: "/login", name: "Login", component: <Login /> },
@@ -47,9 +51,15 @@ const siteRoutes = [
 
     //employee Info
     { path: "/employee/add", name: "EmployeeAdd", component: <EmployeeAdd /> },
+<<<<<<< HEAD
     { path: "/employee", name: "EmployeeList", component: <EmployeeList /> },
     // user
     { path: "/user/list", name: "UserList", component: <UserList /> },
+=======
+
+     //employee Info
+     { path: "/salary-structure/add", name: "SalaryStructureAdd", component: <SalaryStructureAdd /> },
+>>>>>>> dfeaeea (salary structure module implemented)
   
   ];
 
