@@ -24,21 +24,29 @@ const SalaryStructureForm = (props) => {
                         const listLenght = salaryStructureLineItems.length
 
                         return (
-                            <div >
-                                <div className="row justify-content-center mr-5">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <FormikControl
+                                            control='input'
+                                            type='text'
+                                            label='Name :'
+                                            name='name'
+                                            className='form-control'
+                                            inputStyle='col-sm-6'
+                                            labelStyle='text-right col-sm-4'
+                                        />
+                                    </div>
 
-                                    <FormikControl
-                                        control='input'
-                                        type='text'
-                                        label='Name :'
-                                        name='name'
-                                        className='form-control'
-                                    />
                                 </div>
-                                {
-                                    salaryStructureLineItems.map((salaryStructureLineItem, index) => (
-                                        <div key={index} className="container">
-                                            <div className="row">
+                                <div className="row">
+                                
+                                    {
+                                        salaryStructureLineItems.map((salaryStructureLineItem, index) => (
+                                            <>
+                                            <div className="col-2">
+
+                                            </div>
                                                 <div className="col-4">
                                                     <FormikControl
                                                         control='select'
@@ -59,20 +67,9 @@ const SalaryStructureForm = (props) => {
                                                         className='form-control'
                                                         placeHolder='Percentage'
                                                     />
-
                                                 </div>
-                                                {/* <div className="col-8">
-                                                    <FormikControl
-                                                        control='input'
-                                                        type='text'
-                                                        label={`Name(${index + 1})`}
-                                                        name={`salaryStructureLineItems[${index}].name`}
-                                                        className='form-control'
-                                                        placeHolder='Enter Salary Structure'
-                                                    />
-                                                </div> */}
-                                                <div className="col-4">
 
+                                                <div className="col-2">
                                                     {
                                                         (index > 0 && listLenght - 1 === index) && (
                                                             <div className="d-inline mr-1">
@@ -97,10 +94,13 @@ const SalaryStructureForm = (props) => {
                                                         )
                                                     }
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
+
+                                            </>
+                                        ))
+                                    }
+                                </div>
+                                
+
                                 <Col md={12} className='mb-10 mt-10 ml-5 f-right'>
                                     <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
                                         <FontAwesomeIcon icon={faSave} className='me-2' /> Submit

@@ -6,7 +6,10 @@ function Select (props) {
   const { label, name, options,isSelectAny, ...rest } = props
   return (
     <div className='form-group row'>
-      <label className="control-label col-sm-4 font-weight-bold" htmlFor={name}>{label}</label>
+      {label ? 
+      <label className="control-label col-sm-4 font-weight-bold" htmlFor={name}>{label}</label> 
+      : ''}
+      
 
        <div className="col-sm-8">
       <Field as='select' id={name} name={name} {...rest}>

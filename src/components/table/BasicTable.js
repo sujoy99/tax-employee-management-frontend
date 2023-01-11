@@ -33,7 +33,7 @@ const BasicTable = (props) => {
                             {perPage ? (
                                 <>
                                     <Col xs={8} md={6} lg={6} xl={4}>
-                                        <Form>
+                                        {/* <Form> */}
                                             <InputGroup>
                                                 <InputGroup.Text>
                                                     <FontAwesomeIcon icon={faSearch} />
@@ -50,7 +50,7 @@ const BasicTable = (props) => {
                                                 onClick={() => onChangeSearchValue(searchValue)}
                                                 >Search</Button>
                                             </InputGroup>
-                                        </Form>
+                                        {/* </Form> */}
                                     </Col>
 
                                     <Col xs={4} md={4} lg={2} xl={2} className="ps-md-0 text-end">

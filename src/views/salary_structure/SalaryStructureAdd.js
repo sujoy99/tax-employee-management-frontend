@@ -31,7 +31,7 @@ const SalaryStructureAdd = () => {
         title: "Add New Salary Structure ",
         headerSlot: () => (
             
-                <Link to='#'>
+                <Link to='/salary-structure'>
                     <Button variant='link' className='f-right btn-sm p-1'>
                         <FontAwesomeIcon icon={faList} className='me-2' />
                         View Salary Structure List

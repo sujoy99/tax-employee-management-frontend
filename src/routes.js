@@ -29,8 +29,9 @@ const EmployeeAdd = React.lazy(() => import("./views/employee_info/EmployeeAdd")
 
 
 const UserList = React.lazy(() => import("./views/user/UserList"))
-
+//Salary Structure 
 const SalaryStructureAdd = React.lazy(() => import("./views/salary_structure/SalaryStructureAdd"));
+const SalaryStructureList = React.lazy(() => import("./views/salary_structure/SalaryStructureList"));
 
 const authRoutes = [
     { path: "/login", name: "Login", component: <Login /> },
@@ -55,6 +56,7 @@ const siteRoutes = [
 
      //employee Info
      { path: "/salary-structure/add", name: "SalaryStructureAdd", component: <SalaryStructureAdd /> },
+     { path: "/salary-structure", name: "SalaryStructureList", component: <SalaryStructureList /> },
   
   ];
 
