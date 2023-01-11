@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Card, Col, Form, InputGroup, Nav, Row, FormControl, } from "react-bootstrap";
 
 const Pagination = (props) => {
     console.log("props", props)
-    const {currentPage,pageNo, totalPages, setCurrentPage, ...rest} = props.meta;
+    const { currentPage, pageNo, totalPages, setCurrentPage, ...rest } = props.meta;
 
     console.log("currentPage::", currentPage);
     console.log("total", pageNo)
     console.log("")
-    
+
     // const [pageNo, setPageNo] = useState(0)
     // const totalPages = pageNo;
 
@@ -44,7 +44,8 @@ const Pagination = (props) => {
     };
 
 
-    const nextPage = () => { console.log("d")
+    const nextPage = () => {
+        console.log("d")
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1)
             // setIsLoading(true)
@@ -53,45 +54,56 @@ const Pagination = (props) => {
 
     return (
         <div className='mb-5'>
-                <div style={{ "float": "left" }}>
-                    Showing Page {currentPage} of {totalPages}
-                </div>
+            <div style={{ "float": "left" }}>
+                Showing Page {currentPage} of {totalPages}
+            </div>
 
-                <div style={{ "float": "right" }}>
+            <div style={{ "float": "right" }}>
 
-                    <InputGroup size="sm">
+                <InputGroup size="sm">
 
-                        <InputGroup.Prepend>
-                            <Button type="button" variant="outline-info" disabled={currentPage === 1 ? true : false}
-                                onClick={firstPage}
-                            >
-                                First
-                            </Button>
-                            <Button type="button" variant="outline-info" disabled={currentPage === 1 ? true : false}
-                                onClick={prevPage}
-                            >
-                                Prev
-                            </Button>
-                        </InputGroup.Prepend>
+                    <InputGroup.Prepend>
+                        <Button type="button" variant="outline-info" disabled={currentPage === 1 ? true : false}
+                            onClick={firstPage}
+                        >
+                            First
+                        </Button>
+                        <Button type="button" variant="outline-info" disabled={currentPage === 1 ? true : false}
+                            onClick={prevPage}
+                        >
+                            Prev
+                        </Button>
+                    </InputGroup.Prepend>
 
-                        <FormControl style={pageNumCss} className={"bg-dark"} name="currentPage" value={currentPage}
-                            onChange={changePage}
+                    <Form>
+
+                        <Form.Control
+                        className={"bg-dark"}
+                        style={pageNumCss}
+                        value={currentPage || ''}
+                        name="currentPage" 
+                        onChange={changePage}
                         />
-                        <InputGroup.Append>
-                            <Button type="button" variant="outline-info" disabled={currentPage === totalPages ? true : false}
-                                onClick={nextPage}
-                            >
-                                Next
-                            </Button>
-                            <Button type="button" variant="outline-info" disabled={currentPage === totalPages ? true : false}
-                                onClick={lastPage}
-                            >
-                                Last
-                            </Button>
-                        </InputGroup.Append>
+                    </Form>
 
-                    </InputGroup>
-                </div>
+                    {/* <FormControl style={pageNumCss} className={"bg-dark"} name="currentPage" value={currentPage}
+                            onChange={changePage}
+                        /> */}
+                    <InputGroup.Append>
+                        <Button type="button" variant="outline-info" disabled={currentPage === totalPages ? true : false}
+                            onClick={nextPage}
+                        >
+                            Next
+                        </Button>
+                        <Button type="button" variant="outline-info" disabled={currentPage === totalPages ? true : false}
+                            onClick={lastPage}
+                        >
+                            Last
+                        </Button>
+                    </InputGroup.Append>
+
+                </InputGroup>
+            </div>
         </div>
     )
 }

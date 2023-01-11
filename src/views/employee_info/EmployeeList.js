@@ -79,7 +79,7 @@ const EmployeeList = () => {
 
     useEffect( () => {
         setIsLoading(true);
-        axiosService.get(`http://10.0.2.230:8080/user/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+        axiosService.get(`http://10.0.2.230:8080/employee/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
             let meta = response.data.meta;            
             setMeta(meta)
             setEmployees(response.data.list);
@@ -100,7 +100,7 @@ const EmployeeList = () => {
             <BasicTable 
                 {...tableProps}
                 onSizeChange={(pageSize) => onSizeChange(pageSize)}
-                onSearchByValue = {(searchVal) => onSearchByValue(searchVal)}
+                onChangeSearchValue = {(searchVal) => onSearchByValue(searchVal)}
             >
                 {employees !== undefined &&
                     JSON.parse(JSON.stringify(employees)).map((row, rowIndex) => (
