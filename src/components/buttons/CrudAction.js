@@ -1,11 +1,11 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faEye, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faEye, faTrashAlt, faPercent} from "@fortawesome/free-solid-svg-icons";
 
 import {Nav} from "react-bootstrap";
 
 const CrudAction = (props) => {
-    const {onShowClick, onEditClick, onDeleteClick, checkButton} = props;
+    const {onShowClick, onEditClick, onDeleteClick, checkButton, onSalaryTaxClick} = props;
     return (
         <article>
             <Nav fill className="flex-column flex-sm-row">
@@ -29,7 +29,7 @@ const CrudAction = (props) => {
                         )}
                     </Nav.Item>
                 }
-                {onDeleteClick !== undefined &&
+                {/* {onDeleteClick !== undefined &&
                     <Nav.Item onClick={onDeleteClick} className="m-1 mr-3">
                         <FontAwesomeIcon
                             icon={faTrashAlt}
@@ -37,6 +37,15 @@ const CrudAction = (props) => {
                             title="Remove"
                         />
                     </Nav.Item>
+                } */}
+                {onSalaryTaxClick !== undefined &&
+                    <Nav.Item onClick={onSalaryTaxClick} className="m-1 mr-3">
+                    <FontAwesomeIcon
+                        icon={faPercent}
+                        className=" text-danger"
+                        title="Tax Calculation"
+                    />
+                </Nav.Item>
                 }
             </Nav>
         </article>

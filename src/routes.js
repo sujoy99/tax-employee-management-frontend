@@ -46,7 +46,7 @@ const siteRoutes = [
     { path: "/salary-type/:id/edit", name: "SalaryTypeEdit", component: SalaryTypeEdit },
     
     //employee salary 
-    { path: "/employee-salary/add", name: "EmployeeSalaryAdd", component: <EmployeeSalaryAdd /> },
+    { path: "/employee-salary/:id/add", name: "EmployeeSalaryAdd", component: <EmployeeSalaryAdd /> },
 
     //employee Info
     { path: "/employee/add", name: "EmployeeAdd", component: <EmployeeAdd /> },

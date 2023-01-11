@@ -123,6 +123,9 @@ const EmployeeList = () => {
                                     onEditClick={() =>
                                         navigate(`/portal/student-type/${row.id}/edit`)
                                     }
+                                    onSalaryTaxClick={() =>
+                                        navigate(`/employee-salary/${row.id}/add`)
+                                    }
                                 // onDeleteClick={() => onDeleteClick(row)}
                                 />
                             </td>

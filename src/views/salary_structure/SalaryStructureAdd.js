@@ -17,7 +17,7 @@ const SalaryStructureAdd = () => {
     const [salaryTypeList, setSalaryTypeLists] = useState([]);
 
     const fetchData = useCallback(async () => {
-        const response = await axiosService.get('http://localhost:8080/salary-type/list');
+        const response = await axiosService.get('http://10.0.2.230:8080/salary-type/list');
         console.log("response  :: ", response);
         setSalaryTypeLists(response.data);
       },[])
@@ -66,7 +66,7 @@ const SalaryStructureAdd = () => {
                     <div className="row">
                     <div className="col-2"></div>
                         {/* {loading && <ProgressBar />} */}
-                        <div className="col-8">
+                        <div className="col-10">
                             <Formik
                                 initialValues={SalaryStructure}
                                 validationSchema={SalaryStructure.validator()}
@@ -78,7 +78,7 @@ const SalaryStructureAdd = () => {
                             </Formik>
                         </div>
 
-                        <div className="col-2"></div>
+                        {/* <div className="col-2"></div> */}
                     </div>
                     <ToastContainer />
                 </Card.Body>

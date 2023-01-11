@@ -18,7 +18,7 @@ const EmployeeAdd = () => {
     const [salaryStructureList, setSalaryStructureLists] = useState([]);
 
     const fetchData = useCallback(async () => {
-        const response = await axiosService.get('http://localhost:8080/salary-structure/list');
+        const response = await axiosService.get('http://10.0.2.230:8080/salary-structure/list');
         console.log("response  :: ", response);
         setSalaryStructureLists(response.data);
       },[])

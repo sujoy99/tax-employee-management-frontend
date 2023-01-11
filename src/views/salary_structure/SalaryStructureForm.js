@@ -14,6 +14,9 @@ const SalaryStructureForm = (props) => {
 
     return (
         <Form className="form-horizontal">
+
+
+
             <FieldArray name="salaryStructureLineItems">
                 {
                     (fieldArrayProps) => {
@@ -26,80 +29,101 @@ const SalaryStructureForm = (props) => {
                         return (
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-12">
-                                        <FormikControl
-                                            control='input'
-                                            type='text'
-                                            label='Name :'
-                                            name='name'
-                                            className='form-control'
-                                            inputStyle='col-sm-6'
-                                            labelStyle='text-right col-sm-4'
-                                        />
+                                    <div className="col-10 mt-3">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <FormikControl
+                                                    control='input'
+                                                    type='text'
+                                                    label='Name :'
+                                                    name='name'
+                                                    className='form-control'
+                                                    inputStyle='col-sm-8'
+                                                    labelStyle='text-right col-sm-4'
+                                                />
+                                            </div>
+
+                                            {
+                                                salaryStructureLineItems.map((salaryStructureLineItem, index) => (
+                                                    <div className="row col-12" key={index}>
+
+                                                        <div className="offset-md-4 col-4 pl-4">
+                                                            <FormikControl
+                                                                control='select'
+                                                                // label='Salary Structure :'
+                                                                name={`salaryStructureLineItems[${index}].salaryTypeId`}
+                                                                className='form-control'
+                                                                options={dropdownOption}
+                                                                isSelectAny='true'
+                                                                selectStyle='col-sm-12'
+                                                            />
+                                                        </div>
+
+                                                        <div className="col-3">
+                                                            <FormikControl
+                                                                control='input'
+                                                                type='text'
+                                                                // label={`Name(${index + 1})`}
+                                                                name={`salaryStructureLineItems[${index}].percentage`}
+                                                                className='form-control'
+                                                                placeHolder='Percentage'
+                                                                inputStyle='col-sm-12'
+                                                            />
+                                                        </div>
+
+                                                        <div className="col-1">
+                                                            {
+                                                                (index > 0 && listLenght - 1 === index) && (
+                                                                    <div className="d-inline mr-1">
+                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                        </button>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            {
+                                                                (listLenght - 1 > index) && (
+                                                                    <div className="d-inline mr-1">
+                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                        </button>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            {/* {
+                                                    (index > 0 && listLenght - 1 === index) && (
+                                                        <div className="d-inline mr-1">
+                                                            <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                }
+                                                {
+                                                    (listLenght - 1 === index) && (
+                                                        <div className="d-inline">
+                                                            <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
+                                                        </div>
+                                                    )
+                                                }
+                                                {
+                                                    (listLenght - 1 > index) && (
+                                                        <div className="d-inline mr-1">
+                                                            <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                } */}
+                                                        </div>
+
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="col-2">
+                                        <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
                                     </div>
 
                                 </div>
-                                <div className="row">
-                                
-                                    {
-                                        salaryStructureLineItems.map((salaryStructureLineItem, index) => (
-                                            <>
-                                            <div className="col-2">
 
-                                            </div>
-                                                <div className="col-4">
-                                                    <FormikControl
-                                                        control='select'
-                                                        // label='Salary Structure :'
-                                                        name={`salaryStructureLineItems[${index}].salaryTypeId`}
-                                                        className='form-control'
-                                                        options={dropdownOption}
-                                                        isSelectAny='true'
-                                                    />
-                                                </div>
-
-                                                <div className="col-4">
-                                                    <FormikControl
-                                                        control='input'
-                                                        type='text'
-                                                        // label={`Name(${index + 1})`}
-                                                        name={`salaryStructureLineItems[${index}].percentage`}
-                                                        className='form-control'
-                                                        placeHolder='Percentage'
-                                                    />
-                                                </div>
-
-                                                <div className="col-2">
-                                                    {
-                                                        (index > 0 && listLenght - 1 === index) && (
-                                                            <div className="d-inline mr-1">
-                                                                <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
-                                                                </button>
-                                                            </div>
-                                                        )
-                                                    }
-                                                    {
-                                                        (listLenght - 1 === index) && (
-                                                            <div className="d-inline">
-                                                                <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
-                                                            </div>
-                                                        )
-                                                    }
-                                                    {
-                                                        (listLenght - 1 > index) && (
-                                                            <div className="d-inline mr-1">
-                                                                <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
-                                                                </button>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-
-                                            </>
-                                        ))
-                                    }
-                                </div>
-                                
 
                                 <Col md={12} className='mb-10 mt-10 ml-5 f-right'>
                                     <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
