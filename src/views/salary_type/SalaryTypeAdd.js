@@ -1,66 +1,74 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
+import React from "react";
+import { Formik } from "formik";
 
-import { Card, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
+import SalaryTypeForm from "./SalaryTypeForm";
+import { SalaryType } from "./SalaryType";
+import { Link } from "react-router-dom";
+import axiosService from "../../helpers/axiosService";
+import { Toaster } from "../../components/toaster/Toaster";
+import { ToastContainer  } from "react-toastify";
 
 
-import DefaultCard from '../../components/card/default/DefaultCard'
-import SalaryTypeForm from './SalaryTypeForm'
-import { SalaryType } from './SalaryType';
-import { getSalaryObject } from '../../helpers/utils';
-import { Link } from 'react-router-dom';
+const SalaryTypeAdd = (props) => {
+  const { handleClose, ...rest } = props;
+  const cardProps = {
+    title: "Manage Salary Type",
+    headerSlot: () => (
+      <>
+        <Link to="#">
+          <Button variant="link" className="f-right btn-sm p-1">
+            <FontAwesomeIcon icon={faList} className="me-2" />
+            View Student Type List
+          </Button>
+        </Link>
+      </>
+    ),
+  };
 
+  const testing = () => {
+    handleClose();
+  };
 
-const SalaryTypeAdd = () => { 
+  const onSubmit = async (values) => {
 
-    const cardProps = {
-        title: "Manage Salary Type",
-        headerSlot: () => (
-            <>
-                <Link to='#'>
-                    <Button variant='link' className='f-right btn-sm p-1'>
-                        <FontAwesomeIcon icon={faList} className='me-2' />
-                        View Student Type List
-                    </Button>
-                </Link>
-            </>
-        ),
-    };
-
-
-    const onSubmit = values => {
-        console.log(getSalaryObject(2022, 2023));
-        console.log('Form data', values)
+    try {
+      const response = await axiosService.post(
+        "http://10.0.2.230:8080/salary-type/save",
+        values
+      ).then(response => {
+        testing();
+        Toaster.successToast(response.message);
+      }).catch(err => {
+        
+        Toaster.errorToast(err.response.data.message)
+      });
+      
+      
+      
+    } catch (err) {
+      Toaster.errorToast(err)
     }
+  };
 
+  return (
+    
+    <div className="row">
+      <Formik
+        initialValues={SalaryType}
+        validationSchema={SalaryType.validator()}
+        onSubmit={onSubmit}
+      >
+        {(props) => {
+          return <SalaryTypeForm formType="add" {...props} />;
+        }}
+      </Formik>
+      <ToastContainer />
+    </div>
 
-    return (
-        <DefaultCard className='mb-50' {...cardProps}>
-            <Card border='white' className='table-wrapper table-responsive'>
-                <Card.Body className="shadow p-3 mb-5 bg-white rounded container">
-                    <div className="row">
-                    <div className="col-3"></div>
-                        {/* {loading && <ProgressBar />} */}
-                        <div className="col-6">
-                            <Formik
-                                initialValues={SalaryType}
-                                validationSchema={SalaryType.validator()}
-                                onSubmit={onSubmit}>
-                                {(props) => {
-                                    return <SalaryTypeForm formType="add" {...props} />;
-                                }}
-                            </Formik>
-                        </div>
-
-                        <div className="col-3"></div>
-                    </div>
-
-                </Card.Body>
-            </Card>
-        </DefaultCard>
-    )
-}
+  );
+};
 
 export default SalaryTypeAdd;

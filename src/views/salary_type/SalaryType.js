@@ -6,9 +6,9 @@ class SalaryTypeModel {
      * Model properties
      */
     constructor() {
-        this.salaryTypeName = "";
-        this.studentTypeDescription = "";
-        this.salaryTypes = [{name: ""}]
+
+        this.name = "";
+        // this.salaryTypes = [{name: ""}]
     }
 
     /**
@@ -49,11 +49,8 @@ class SalaryTypeModel {
      */
     validator() {
         return Yup.object().shape({
-            // salaryTypeName: Yup.string().required("Salary type name is a required field!"),
-            // studentTypeDescription: Yup.string().required("Student type description is a required field!"),
-            salaryTypes: Yup.array().of(Yup.object().shape({
-                name: Yup.string().required('*Required')
-        }))
+            name: Yup.string().required("Salary type name is a required field!"),
+           
         });
     }
 
