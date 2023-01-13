@@ -26,7 +26,7 @@ const EmployeeAdd = () => {
 
   const fetchData = useCallback(async () => {
     const response = await axiosService.get(
-      "http://10.0.2.230:8080/salary-structure/list"
+      "http://localhost:8080/salary-structure/list"
     );
     console.log("response  :: ", response);
     setSalaryStructureLists(response.data);
@@ -34,7 +34,7 @@ const EmployeeAdd = () => {
 
   const fetchDataForViewOrEdit = useCallback(async () => {
     const response = await axiosService
-      .get(`http://10.0.2.230:8080/employee/getEmployee?id=${id}`)
+      .get(`http://localhost:8080/employee/getEmployee?id=${id}`)
       .then((response) => {
         // setEmployee(response.data)
         console.log("hello ", response);
@@ -77,35 +77,35 @@ const EmployeeAdd = () => {
       //     Toaster.successToast(response.message)
       // }
 
-      //   if (id != undefined && id) {
-      //     console.log("dek", values);
-      //     // await axiosService
-      //     //   .put(`http://localhost:8080/employee/update?id=${id}`, values)
-      //     //   .then((response) => {
-      //     //     const status = response.status;
-      //     //     if (status == 200) {
-      //     //       SuccessToast(response.message, () => navigate("/employee"));
-      //     //     }
-      //     //   });
-      //   }
+      if (id != undefined && id) {
+        console.log("dek", values);
+        await axiosService
+          .post("http://localhost:8080/employee/update", values)
+          .then((response) => {
+            const status = response.status;
+            if (status == 200) {
+              SuccessToast(response.message, () => navigate("/employee"));
+            }
+          });
+      }
 
-      await axiosService
-        .post("http://localhost:8080/employee/save", values)
-        .then((response) => {
-          const status = response.status;
-          if (status == 200) {
-            SuccessToast(response.message, () => navigate("/employee"));
-          }
+      // await axiosService
+      //   .post("http://localhost:8080/employee/save", values)
+      //   .then((response) => {
+      //     const status = response.status;
+      //     if (status == 200) {
+      //       SuccessToast(response.message, () => navigate("/employee"));
+      //     }
 
-          // console.log("One")
-          // const status = response.status;
-          // if (status == 200) {
-          //     navigate('/employee')
-          //     // Toaster.successToast(response.message)
-          //     SuccessToast('hello','/employee')
+      //     // console.log("One")
+      //     // const status = response.status;
+      //     // if (status == 200) {
+      //     //     navigate('/employee')
+      //     //     // Toaster.successToast(response.message)
+      //     //     SuccessToast('hello','/employee')
 
-          //  }
-        });
+      //     //  }
+      //   });
     } catch (error) {
       console.log(" Error Occured ", error);
     }
