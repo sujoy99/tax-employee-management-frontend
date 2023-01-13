@@ -32,6 +32,8 @@ const SalaryTypeAdd = (props) => {
     handleClose();
   };
 
+  const reload=()=>window.location.reload();
+
   const onSubmit = async (values) => {
 
     try {
@@ -40,7 +42,7 @@ const SalaryTypeAdd = (props) => {
         values
       ).then(response => {
         testing();
-        Toaster.successToast(response.message);
+        Toaster.successToast(response.message, reload());
       }).catch(err => {
         
         Toaster.errorToast(err.response.data.message)
