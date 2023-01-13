@@ -16,6 +16,7 @@ const Input = (props) => {
   return (
     
     <div className='form-group row'>
+
       
       {label ? 
       <label htmlFor={name} className={`control-label font-weight-bold ${labelStyle ? labelStyle : ""}`}>{label} </label> 
@@ -23,6 +24,7 @@ const Input = (props) => {
       
       {/* className={`banner ${active ? "active" : ""}`} */}
       <div className={inputStyle ? inputStyle : "col-sm-8"}>
+
         <Field id={name} name={name} placeholder={placeHolder} {...rest} />
         <ErrorMessage component={TextError} name={name} />
       </div>
