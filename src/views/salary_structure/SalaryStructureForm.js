@@ -125,7 +125,19 @@ const SalaryStructureForm = (props) => {
                                 </div>
 
 
-                                <Col md={12} className='mb-10 mt-10 ml-5 f-right'>
+                                <Row className='d-flex justify-content-center ml-5'>
+                                    <Button variant='white' className='f-right mr-10 btn-sm btn-secondary mx-2' type='reset'>
+                                        <FontAwesomeIcon icon={faUndo} className='me-2' /> Reset
+                                    </Button>
+                                    <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
+                                        <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
+                                    </Button>
+
+                                </Row>
+
+
+
+                                {/* <Col md={12} className='mb-10 mt-10 ml-5 f-right'>
                                     <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
                                         <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
                                     </Button>
@@ -133,7 +145,7 @@ const SalaryStructureForm = (props) => {
                                         <FontAwesomeIcon icon={faUndo} className='me-2' /> Reset
                                     </Button>
 
-                                </Col>
+                                </Col> */}
                             </div>
                         )
                     }

@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Pagination from '../pagination/Pagination';
+import { redirect, useParams, useNavigate } from 'react-router-dom';
 const BasicTable = (props) => {
     const {
         headers,
@@ -23,6 +24,7 @@ const BasicTable = (props) => {
     console.log("meta basic::", props);
 
     const [searchValue, setSearchValue] = useState("")
+    const navigate = useNavigate();
     return (
         <>
             <Card border="white" className="table-wrapper ">
@@ -47,7 +49,9 @@ const BasicTable = (props) => {
                                                     
                                                     />
                                                 <Button className="btn btn-primary"
-                                                onClick={() => onChangeSearchValue(searchValue)}
+                                                onClick={() => {
+                                                    onChangeSearchValue(searchValue)
+                                                }}
                                                 >Search</Button>
                                             </InputGroup>
                                         {/* </Form> */}

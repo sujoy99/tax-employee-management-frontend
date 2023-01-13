@@ -8,6 +8,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from '../../components/table/BasicTable';
 import { ProgressBar } from "react-bootstrap";
 import CrudAction from '../../components/buttons/CrudAction';
+import { ToastContainer, toast } from 'react-toastify';
 
 const EmployeeList = () => {
     let navigate = useNavigate();
@@ -118,10 +119,10 @@ const EmployeeList = () => {
                             <td>
                                 <CrudAction
                                     onShowClick={() =>
-                                        navigate(`/portal/student-type/${row.id}`)
+                                        navigate(`/employee/view/${row.id}/true`)
                                     }
                                     onEditClick={() =>
-                                        navigate(`/portal/student-type/${row.id}/edit`)
+                                        navigate(`/employee/edit/${row.id}/false`)
                                     }
                                     onSalaryTaxClick={() =>
                                         navigate(`/employee-salary/${row.id}/add`)
@@ -132,6 +133,7 @@ const EmployeeList = () => {
                         </tr>
                     ))}
             </BasicTable>
+            <ToastContainer />
         </DefaultCard>
     )
 

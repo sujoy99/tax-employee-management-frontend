@@ -50,6 +50,8 @@ const siteRoutes = [
 
     //employee Info
     { path: "/employee/add", name: "EmployeeAdd", component: <EmployeeAdd /> },
+    { path: "/employee/view/:id/:viewOnly", name: "EmployeeView", component: <EmployeeAdd /> },
+    { path: "/employee/edit/:id/:viewOnly", name: "EmployeeEdit", component: <EmployeeAdd /> },
     { path: "/employee", name: "EmployeeList", component: <EmployeeList /> },
     // user
     { path: "/user/list", name: "UserList", component: <UserList /> },

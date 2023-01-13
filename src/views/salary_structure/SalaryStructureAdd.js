@@ -9,8 +9,10 @@ import { SalaryStructure } from './SalaryStructure';
 import SalaryStructureForm from './SalaryStructureForm'
 import { Link } from 'react-router-dom';
 import axiosService from '../../helpers/axiosService';
-import { Toaster } from '../../components/toaster/Toaster';
+// import { Toaster } from '../../components/toaster/Toaster';
 import { ToastContainer, toast } from 'react-toastify';
+import { SuccessToast, ErrorToast } from '../../components/toaster/Toaster';
+import { useNavigate } from 'react-router-dom';
 
 
 const SalaryStructureAdd = () => {
@@ -41,6 +43,8 @@ const SalaryStructureAdd = () => {
         ),
     };
 
+    const navigate = useNavigate();
+
     const onSubmit = async values => {
         try{
             console.log("hello ", values)
@@ -49,7 +53,8 @@ const SalaryStructureAdd = () => {
             const status = response.status;
             console.log("response ", response);
             if(status == 200) {
-                Toaster.successToast(response.message)
+                // Toaster.successToast(response.message)
+                SuccessToast(response.message, () => navigate("/salary-structure"))
             }
             
         } catch(error){
@@ -64,7 +69,8 @@ const SalaryStructureAdd = () => {
             <Card border='white' className='table-wrapper table-responsive'>
                 <Card.Body className="shadow p-3 mb-5 bg-white rounded container">
                     <div className="row">
-                    <div className="col-2"></div>
+                    {/* <div className="col-2"></div> */}
+                    <div className=""></div>
                         {/* {loading && <ProgressBar />} */}
                         <div className="col-10">
                             <Formik
