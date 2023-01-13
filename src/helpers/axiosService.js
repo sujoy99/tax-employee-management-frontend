@@ -43,9 +43,10 @@ class AxiosService {
         return (response.status, response.data);
     }
 
-    // put(url, body) {
-    //     return this.instance.put(url, body);
-    // }
+    async put(url, body) {
+        const response = await this.instance.put(url, body);
+        return (response.status, response.data)
+    }
 
     // delete(url) {
     //     return this.instance.delete(url);
