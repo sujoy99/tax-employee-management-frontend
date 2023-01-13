@@ -8,7 +8,7 @@ import SalaryTypeForm from "./SalaryTypeForm";
 import { SalaryType } from "./SalaryType";
 import { Link } from "react-router-dom";
 import axiosService from "../../helpers/axiosService";
-import { Toaster } from "../../components/toaster/Toaster";
+import { SuccessToast, ErrorToast } from "../../components/toaster/Toaster";
 import { ToastContainer  } from "react-toastify";
 
 
@@ -42,16 +42,16 @@ const SalaryTypeAdd = (props) => {
         values
       ).then(response => {
         testing();
-        Toaster.successToast(response.message, reload());
+        SuccessToast(response.message, reload());
       }).catch(err => {
         
-        Toaster.errorToast(err.response.data.message)
+        ErrorToast(err.response.data.message)
       });
       
       
       
     } catch (err) {
-      Toaster.errorToast(err)
+      ErrorToast(err.response.data.message)
     }
   };
 
