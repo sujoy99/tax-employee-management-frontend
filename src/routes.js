@@ -27,8 +27,11 @@ const EmployeeSalaryAdd = React.lazy(() => import("./views/employee_salary/Emplo
 const EmployeeList = React.lazy(() => import("./views/employee_info/EmployeeList"));
 const EmployeeAdd = React.lazy(() => import("./views/employee_info/EmployeeAdd"));
 
-const UserList = React.lazy(() => import("./views/user/UserList"))
 
+const UserList = React.lazy(() => import("./views/user/UserList"))
+//Salary Structure 
+const SalaryStructureAdd = React.lazy(() => import("./views/salary_structure/SalaryStructureAdd"));
+const SalaryStructureList = React.lazy(() => import("./views/salary_structure/SalaryStructureList"));
 
 const authRoutes = [
     { path: "/login", name: "Login", component: <Login /> },
@@ -43,13 +46,19 @@ const siteRoutes = [
     { path: "/salary-type/:id/edit", name: "SalaryTypeEdit", component: SalaryTypeEdit },
     
     //employee salary 
-    { path: "/employee-salary/add", name: "EmployeeSalaryAdd", component: <EmployeeSalaryAdd /> },
+    { path: "/employee-salary/:id/add", name: "EmployeeSalaryAdd", component: <EmployeeSalaryAdd /> },
 
     //employee Info
     { path: "/employee/add", name: "EmployeeAdd", component: <EmployeeAdd /> },
+    { path: "/employee/view/:id/:viewOnly", name: "EmployeeView", component: <EmployeeAdd /> },
+    { path: "/employee/edit/:id/:viewOnly", name: "EmployeeEdit", component: <EmployeeAdd /> },
     { path: "/employee", name: "EmployeeList", component: <EmployeeList /> },
     // user
     { path: "/user/list", name: "UserList", component: <UserList /> },
+
+     //employee Info
+     { path: "/salary-structure/add", name: "SalaryStructureAdd", component: <SalaryStructureAdd /> },
+     { path: "/salary-structure", name: "SalaryStructureList", component: <SalaryStructureList /> },
   
   ];
 

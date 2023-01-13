@@ -11,18 +11,25 @@ class EmployeeModel {
         this.joiningDate = "";
         this.tinNumber = "";
         this.terminationDate = "";
-        this.salaryStructureId = "";
+        this.salaryStructure = "";
         this.isActive = "";
     }
 
     /**
      * Get model instance from json
      */
-    fromJson(data = '') {
-        let obj = new EmployeeModel();
-        // if (data.id !== undefined && data.id) {
-        //     obj.id = data.id;
-        // }
+    fromJson(data) { console.log("d", data);
+        let obj = {};
+        if (data.id !== undefined && data.id) {
+            obj.id = data.id;
+        }
+        obj.firstName = data.firstName ?? "";
+        obj.lastName = data.lastName ?? "";
+        obj.tinNumber = data.tinNumber ?? "";
+        obj.joiningDate = data.joiningDate ?? "";
+        obj.salaryStructure = data.salaryStructure.id ?? "";
+        console.log("sujoy",obj)
+
         // obj.salaryTypeName = data.salaryTypeName ?? "";
         // obj.studentTypeDescription = data.studentTypeDescription ?? "";
         // obj.salaryTypes = data.salaryTypes ?? [{name: ""}] 
@@ -56,7 +63,7 @@ class EmployeeModel {
             lastName: Yup.string().required("Last name is a required field!"),
             joiningDate: Yup.string().required("Joining Date is a required field!"),
             tinNumber: Yup.string().required("TIN Number is a required field!"),
-            salaryStructureId: Yup.string().required("Salary Structure is a required field!")
+            salaryStructure: Yup.string().required("Salary Structure is a required field!")
         });
     }
 
