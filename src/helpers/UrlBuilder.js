@@ -1,11 +1,12 @@
+
 class UrlBuilderHelper {
 
     taxCalculationApi(path) {
-        return `http://localhost:8000/api/v1/${path}`;
+        return `http://${process.env.REACT_APP_TAX_CALCULATION_HOST}:${process.env.REACT_APP_TAX_CALCULATION_PORT}/api/v1/${path}`;
     }
 
     taxEmployeeManagementApi(path) {
-        return `http://10.0.2.230:8080/${path}`;
+        return `http://${process.env.REACT_APP_TAX_EMPLOYEE_MANAGEMENT_HOST}:${process.env.REACT_APP_TAX_EMPLOYEE_MANAGEMENT_PORT}/${path}`;
     };
 }
 
