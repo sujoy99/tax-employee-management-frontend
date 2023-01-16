@@ -1,19 +1,32 @@
-import React, {useState, useEffect} from 'react'
-import { Formik, useFormikContext } from 'formik'
-import { Card, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-
-import DefaultCard from '../../components/card/default/DefaultCard'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Button, Card } from "react-bootstrap";
+import { Link } from 'react-router-dom';
+import DefaultCard from '../../components/card/default/DefaultCard';
+import { getSalaryObject } from '../../helpers/utils';
+import SalaryTypeService from '../salary_type/SalaryTypeService';
 import { EmployeeSalary } from './EmployeeSalary';
 import EmployeeSalaryForm from './EmployeeSalaryForm';
-import { getSalaryObject } from '../../helpers/utils';
-import { Link } from 'react-router-dom';
 
 
 const EmployeeSalaryAdd = () => {
 
     const [isLoading, setIsLoading] = useState(true)
+
+    const [salaryTypeList, setSalaryTypeLists] = useState([]);
+
+    const fetchSalaryTypeData = async () => {
+        const response = await SalaryTypeService.getSalaryTypes();
+        console.log("response  :: ", response);
+        setSalaryTypeLists(response.data);
+    }
+
+    useEffect(() => {
+        fetchSalaryTypeData()
+        
+      },[]);
     
 
     const cardProps = {
