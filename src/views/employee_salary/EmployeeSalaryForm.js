@@ -5,17 +5,18 @@ import FormikControl from '../../components/form/FormikControl';
 import BasicTable from '../../components/table/BasicTable';
 import {getSalaryObject} from '../../helpers/utils';
 
-const EmployeeSalaryForm = (props) => {
-    const {onChangeTaxYear, values, setValues, setFieldValue, ...rest} = props;
+const EmployeeSalaryForm = (props) => { console.log("props", props)
+    const {onChangeTaxYear, values, setValues, setFieldValue, salaryTypeList, touched, ...rest} = props;
     const [basicSalary, setBasicSalary] = useState(0);
     const [houseAllowance, setHouseAllowance] = useState(0);
     const [medicalAllowance, setMedicalAllowance] = useState(0);
+    const [tableProps, setTableProps] = useState({});
     let bSalary = 0;
     let hSalary = 0;
     let mSalary = 0;
 
-    useEffect(() => {
-        values?.lineItems.map((item) => {
+    useEffect(() => { console.log("touched", touched);
+        values?.lineItems.map((item) => { 
             if (item?.salaryTypeId === 1) {
                 bSalary = bSalary + Number(item?.amount);
                 setBasicSalary(bSalary);
@@ -47,28 +48,33 @@ const EmployeeSalaryForm = (props) => {
         {name: '2023-2024', value: '2023-2024'},
     ];
 
-    const salaryTypeList = [
-        {
-            id: 1,
-            name: 'Basic',
-        },
-        {
-            id: 2,
-            name: 'House Rent',
-        },
-        {
-            id: 3,
-            name: 'Medical',
-        },
-    ];
+    // const salaryTypeList = [
+    //     {
+    //         id: 1,
+    //         name: 'Basic',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'House Rent',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'Medical',
+    //     },
+    // ];
 
     useEffect(() => {
         //Runs only on the first render
-        if (values.taxYear) {
+        if (values.taxYear) { console.log("testing")
             const [fromYear, toYear] = values.taxYear.split('-');
 
-            const salaryPerMonth = getSalaryObject(fromYear, toYear, values);
+            const salaryPerMonth = getSalaryObject(fromYear, toYear, values, salaryTypeList);
 
+            let headers = salaryTypeList.map((item, idx) => {
+                return {id: item.name, label: item.name}
+            })
+            // tableProps.headers = [{id: 'id', label: "#"}]
+            tableProps.headers= [ {id: 'id', label: "#"}, ...headers];
             setValues({...values, salaryPerMonth});
             // setIsLoading(false);
             // call formik onChange method
@@ -78,15 +84,15 @@ const EmployeeSalaryForm = (props) => {
         }
     }, [values.taxYear]);
 
-    const tableProps = {
-        headers: [
-            {id: 'id', label: '#'},
-            {id: 'basic', label: 'Basic'},
-            {id: 'houseRent', label: 'House Rent'},
-            {id: 'medical', label: 'Medical'},
-            // {id: "action", label: "Action", width: "120px"},
-        ],
-    };
+    // const tableProps = {
+    //     headers: [
+    //         {id: 'id', label: '#'},
+    //         {id: 'basic', label: 'Basic'},
+    //         {id: 'houseRent', label: 'House Rent'},
+    //         {id: 'medical', label: 'Medical'},
+    //         // {id: "action", label: "Action", width: "120px"},
+    //     ],
+    // };
 
     return (
         <Form className='form-horizontal'>
@@ -106,13 +112,13 @@ const EmployeeSalaryForm = (props) => {
                                     <tr key={rowIndex}>
                                         <td>
                       <span className='fw-normal'>
-                        {row.year + '-' + row.month}
+                        {row.rowHeader}
                       </span>
                                         </td>
                                         {JSON.parse(JSON.stringify(row.list)).map(
                                             (col, colIndex) => {
                                                 // TODO: SHOULD BY DYNAMIC
-                                                let index = rowIndex * 3 + colIndex;
+                                                let index = rowIndex * salaryTypeList.length + colIndex;
 
                                                 return (
                                                     <td key={colIndex}>
@@ -122,8 +128,7 @@ const EmployeeSalaryForm = (props) => {
                                                             name={`lineItems[${index}].amount`}
                                                             className='form-control'
                                                             placeHolder='Enter Salary'
-                                                            defaultValue={0}
-                                                            isStyle='false'
+                                                            // defaultValue={0}
                                                         />
                                                     </td>
                                                 );
@@ -133,7 +138,7 @@ const EmployeeSalaryForm = (props) => {
                                 ),
                             )}
 
-                        <tr key={1}>
+                        {/* <tr key={1}>
                             <td>
                                 <span className='fw-normal'>{'Total'}</span>
                             </td>
@@ -168,7 +173,7 @@ const EmployeeSalaryForm = (props) => {
                                     isStyle='true'
                                 />
                             </td>
-                        </tr>
+                        </tr> */}
                     </>
                 </BasicTable>
             )}
