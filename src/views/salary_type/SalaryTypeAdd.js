@@ -9,8 +9,7 @@ import { ErrorToast, SuccessToast } from "../../components/toaster/Toaster";
 import axiosService from "../../helpers/axiosService";
 import { SalaryType } from "./SalaryType";
 import SalaryTypeForm from "./SalaryTypeForm";
-import SalaryTypeService from './SalaryTypeService';
-
+import SalaryTypeService from "./SalaryTypeService";
 
 const SalaryTypeAdd = (props) => {
   const { handleClose, onSubmitReload, ...rest } = props;
@@ -32,12 +31,9 @@ const SalaryTypeAdd = (props) => {
     handleClose();
   };
 
-
-
-  const reload=()=>window.location.reload();
+  const reload = () => window.location.reload();
 
   const onSubmit = async (values) => {
-
     // const response = await SalaryStructureService.createSalaryStructure(values)
     // console.log("response", response);
     // if (response.status === 200) {
@@ -54,40 +50,38 @@ const SalaryTypeAdd = (props) => {
       //   onSubmitReload();
       //   SuccessToast(response.message, reload());
       // }).catch(err => {
-        
+
       //   ErrorToast(err.response.data.message)
       // });
-      const response = await SalaryTypeService.createSalaryType(
-        values
-      ).then(response => {
-        testing();
-        
-        SuccessToast(response.message, ()=> { console.log("reload")});
-        onSubmitReload();
-      }).catch(err => {
-        
-        ErrorToast(err.response.data.message)
-      });
+      const response = await SalaryTypeService.createSalaryType(values)
+        .then((response) => {
+          testing();
+
+          SuccessToast(response.message, () => {
+            console.log("reload");
+          });
+          onSubmitReload();
+        })
+        .catch((err) => {
+          ErrorToast(err.response.data.message);
+        });
     } catch (err) {
-      ErrorToast(err.response.data.message)
+      ErrorToast(err.response.data.message);
     }
   };
 
   return (
-    
-    <div className="row">
+    <div className="row justify-content-center ml-5 pl-5">
       <Formik
         initialValues={SalaryType}
         validationSchema={SalaryType.validator()}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {(props) => {
           return <SalaryTypeForm formType="add" {...props} />;
         }}
       </Formik>
       <ToastContainer />
     </div>
-
   );
 };
 
