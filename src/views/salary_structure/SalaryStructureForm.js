@@ -15,14 +15,11 @@ const SalaryStructureForm = (props) => {
     return (
         <Form className="form-horizontal">
 
-
-
             <FieldArray name="salaryStructureLineItems">
                 {
                     (fieldArrayProps) => {
                         const { push, remove, form } = fieldArrayProps
-                        const { values } = form
-                        console.log("see :", form)
+                        const { values, isSubmitting } = form
                         const { salaryStructureLineItems } = values
                         const listLenght = salaryStructureLineItems.length
 
@@ -46,16 +43,29 @@ const SalaryStructureForm = (props) => {
                                             {
                                                 salaryStructureLineItems.map((salaryStructureLineItem, index) => (
                                                     <div className="row col-12" key={index}>
+                                                        {/* {
+                                                            salaryStructureLineItem?.id && (
+                                                                <FormikControl
+                                                                    control='input'
+                                                                    type='hidden'
+                                                                    name={`salaryStructureLineItems[${index}].id`}
+                                                                    className='form-control'
+                                                                    placeHolder=''
+                                                                    value={salaryStructureLineItem.id}
+                                                                />
+                                                            )
+                                                        } */}
 
                                                         <div className="offset-md-4 col-4 pl-4">
                                                             <FormikControl
                                                                 control='select'
                                                                 // label='Salary Structure :'
-                                                                name={`salaryStructureLineItems[${index}].salaryTypeId`}
+                                                                name={`salaryStructureLineItems[${index}].salaryType`}
                                                                 className='form-control'
                                                                 options={dropdownOption}
                                                                 isSelectAny='true'
                                                                 selectStyle='col-sm-12'
+                                                                
                                                             />
                                                         </div>
 
@@ -75,7 +85,7 @@ const SalaryStructureForm = (props) => {
                                                             {
                                                                 (index > 0 && listLenght - 1 === index) && (
                                                                     <div className="d-inline mr-1">
-                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => {remove(index); salaryStructureLineItems.splice(index, 1)}}>{' '} Remove {' '}
                                                                         </button>
                                                                     </div>
                                                                 )
@@ -83,34 +93,11 @@ const SalaryStructureForm = (props) => {
                                                             {
                                                                 (listLenght - 1 > index) && (
                                                                     <div className="d-inline mr-1">
-                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
+                                                                        <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => {remove(index); salaryStructureLineItems.splice(index, 1)}}>{' '} Remove {' '}
                                                                         </button>
                                                                     </div>
                                                                 )
                                                             }
-                                                            {/* {
-                                                    (index > 0 && listLenght - 1 === index) && (
-                                                        <div className="d-inline mr-1">
-                                                            <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
-                                                            </button>
-                                                        </div>
-                                                    )
-                                                }
-                                                {
-                                                    (listLenght - 1 === index) && (
-                                                        <div className="d-inline">
-                                                            <button className="btn btn-sm btn-primary my-auto" type='button' onClick={() => push("")}> Add </button>
-                                                        </div>
-                                                    )
-                                                }
-                                                {
-                                                    (listLenght - 1 > index) && (
-                                                        <div className="d-inline mr-1">
-                                                            <button type='button' className="btn btn-sm btn-warning my-auto" onClick={() => remove(index)}>{' '} Remove {' '}
-                                                            </button>
-                                                        </div>
-                                                    )
-                                                } */}
                                                         </div>
 
                                                     </div>
@@ -124,28 +111,15 @@ const SalaryStructureForm = (props) => {
 
                                 </div>
 
-
                                 <Row className='d-flex justify-content-center ml-5'>
                                     <Button variant='white' className='f-right mr-10 btn-sm btn-secondary mx-2' type='reset'>
                                         <FontAwesomeIcon icon={faUndo} className='me-2' /> Reset
                                     </Button>
-                                    <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
+                                    <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit' disabled={isSubmitting}>
                                         <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
                                     </Button>
 
                                 </Row>
-
-
-
-                                {/* <Col md={12} className='mb-10 mt-10 ml-5 f-right'>
-                                    <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
-                                        <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
-                                    </Button>
-                                    <Button variant='white' className='f-right mr-10 btn-sm btn-secondary mx-2' type='reset'>
-                                        <FontAwesomeIcon icon={faUndo} className='me-2' /> Reset
-                                    </Button>
-
-                                </Col> */}
                             </div>
                         )
                     }

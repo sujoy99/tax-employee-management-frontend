@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const ModalForm = (props) =>{
     console.log("Modal Form", props);
-    const {show, handleClose, form,  ...rest} = props; 
+    const {show, handleClose, form, children,  ...rest} = props; 
     return (
         <div>
         <Modal show={show} onHide={handleClose} animation={false}>
@@ -15,7 +15,7 @@ const ModalForm = (props) =>{
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {form}
+                {children}
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={handleClose}>

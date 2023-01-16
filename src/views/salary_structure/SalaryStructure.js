@@ -8,13 +8,20 @@ class SalaryStructureModel {
 
     fromJson(data = '') {
         let obj = new SalaryStructureModel();
-        // if (data.id !== undefined && data.id) {
-        //     obj.id = data.id;
-        // }
-        // obj.salaryTypeName = data.salaryTypeName ?? "";
-        // obj.studentTypeDescription = data.studentTypeDescription ?? "";
-        // obj.salary = data.salaryTypes ?? [{name: ""}] 
-
+        if (data.id !== undefined && data.id) {
+            obj.id = data.id;
+        }
+        obj.name = data.name ?? "";
+        obj.salaryStructureLineItems = 
+            (data.salaryStructureLineItems && data.salaryStructureLineItems.length > 0) ?  
+                data.salaryStructureLineItems.map((item, idx) => {
+                    return {
+                        "id": item.id ?? '',
+                        "percentage": item.percentage ?? '',
+                        "salaryType":   item.salaryType ? item.salaryType.id : item.salaryTypeId ? item.salaryTypeId : ""
+                    }
+                }) : 
+                [{salaryTypeId: "", percentage:""}];
         return obj;
     }
 
@@ -30,6 +37,7 @@ class SalaryStructureModel {
     toString(data = {}) {
         let obj = new SalaryStructureModel()
             .fromJson(data);
+        console.log("hello", JSON.stringify(obj));
         return JSON.stringify(obj);
     }
 

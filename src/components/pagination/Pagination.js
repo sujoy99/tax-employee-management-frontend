@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button, Card, Col, Form, InputGroup, Nav, Row, FormControl, } from "react-bootstrap";
 
 const Pagination = (props) => {
-    console.log("props", props)
     const { currentPage, pageNo, totalPages, setCurrentPage, ...rest } = props.meta;
-
-    console.log("currentPage::", currentPage);
-    console.log("total", pageNo)
-    console.log("")
 
     // const [pageNo, setPageNo] = useState(0)
     // const totalPages = pageNo;

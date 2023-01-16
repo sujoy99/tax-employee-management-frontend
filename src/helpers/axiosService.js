@@ -44,7 +44,7 @@ class AxiosService {
         return (response.status, response.data);
     }
 
-    async put(url, body) {
+    async put(url, body) { console.log("body",body)
         const response = await this.instance.put(url, body);
         return (response.status, response.data)
     }
