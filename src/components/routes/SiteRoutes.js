@@ -5,7 +5,6 @@ import PrivateOutlet from './PrivateOutlet';
 import { siteRoutes } from '../../routes';
 
 const SiteRoutes = () => {
-    console.log("hello vai")
     return (
         <Suspense fallback={<ProgressBar />}>
             <Routes>

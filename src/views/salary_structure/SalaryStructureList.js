@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axiosService from '../../helpers/axiosService';
-import { Button } from "react-bootstrap";
-import DefaultCard from '../../components/card/default/DefaultCard';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import BasicTable from '../../components/table/BasicTable';
-import { ProgressBar } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { Button, ProgressBar } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import CrudAction from '../../components/buttons/CrudAction';
+import DefaultCard from '../../components/card/default/DefaultCard';
+import BasicTable from '../../components/table/BasicTable';
+import SalaryStructureService from './SalaryStructureService';
 
 const SalaryStructureList = () => {
     let navigate = useNavigate();
@@ -78,13 +77,21 @@ const SalaryStructureList = () => {
 
     useEffect( () => {
         setIsLoading(true);
-        axiosService.get(`http://10.0.2.230:8080/salary-structure/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+        // axiosService.get(`http://10.0.2.230:8080/salary-structure/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+        //     let meta = response.data.meta;            
+        //     setMeta(meta)
+        //     setSalaryStructures(response.data.list);
+        //     setIsLoading(false);
+        //     setPageNo(meta.totalPages);
+
+        // });
+
+        SalaryStructureService.getSalaryStructureWithPaging(`page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
             let meta = response.data.meta;            
             setMeta(meta)
             setSalaryStructures(response.data.list);
             setIsLoading(false);
             setPageNo(meta.totalPages);
-            // debugger
 
         });
     }, [currentPage, limit, searchVal])
@@ -114,10 +121,10 @@ const SalaryStructureList = () => {
                             <td>
                                 <CrudAction
                                     onShowClick={() =>
-                                        navigate(`/portal/student-type/${row.id}`)
+                                        navigate(`/salary-structure/${row.id}`)
                                     }
                                     onEditClick={() =>
-                                        navigate(`/portal/student-type/${row.id}/edit`)
+                                        navigate(`/salary-structure/edit/${row.id}`)
                                     }
                                 // onDeleteClick={() => onDeleteClick(row)}
                                 />

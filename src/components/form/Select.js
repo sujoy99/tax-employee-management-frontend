@@ -12,7 +12,7 @@ function Select (props) {
       
 
        <div className={selectStyle ? selectStyle : "col-sm-8"}>
-      <Field as='select' id={name} name={name} {...rest}>
+      <Field as='select' id={name} name={name} {...rest} >
         {
           isSelectAny && (
             <option  value={''}>
@@ -22,7 +22,7 @@ function Select (props) {
         }
         {options.map(option => {
           return (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} >
               {option.name}
             </option>
           )

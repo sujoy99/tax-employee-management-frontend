@@ -21,7 +21,6 @@ const BasicTable = (props) => {
         children,
         setCurrentPage
     } = props;
-    console.log("meta basic::", props);
 
     const [searchValue, setSearchValue] = useState("")
     const navigate = useNavigate();

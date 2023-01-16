@@ -1,49 +1,3 @@
-// import React, {useState} from 'react'
-// import DefaultCard from '../../components/card/default/DefaultCard'
-// import { Card, Button } from "react-bootstrap";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faList } from "@fortawesome/free-solid-svg-icons";
-// import { Link } from 'react-router-dom';
-// import {  Modal} from "react-bootstrap";
-// import ModalForm from '../../components/popup/ModalForm';
-// import SalaryTypeAdd from '../salary_type/SalaryTypeAdd'
-// import { ToastContainer, toast } from 'react-toastify';
-
-// const SalaryTypeList = () => {
-
-//     const [show, setShow] = useState(false);
-//     const handleShow = () =>{ console.log("clicked")
-//         setShow(true);
-//     };
-//     const handleClose = () => setShow(false);
-
-//     const cardProps = {
-//         title: "Manage Salary Type",
-//         headerSlot: () => (
-//             <>
-
-//                 <button type="button" data-toggle="modal"  onClick={handleShow} className="btn btn-outline-success float-right ">Add Salary Type</button>
-
-//             </>
-//         ),
-//     };
-//     return (
-//         <>
-//             <DefaultCard className='mb-50'  {...cardProps}>
-//             </DefaultCard>
-//             <ToastContainer />
-//             {
-//                 show && (
-//                     <ModalForm show={show} handleClose={handleClose} form={<SalaryTypeAdd handleClose={handleClose} />}  ></ModalForm>
-//                 )
-//             }
-
-//         </>
-//     )
-// }
-
-// export default SalaryTypeList
-
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosService from "../../helpers/axiosService";
@@ -54,6 +8,7 @@ import CrudAction from "../../components/buttons/CrudAction";
 import { ToastContainer, toast } from "react-toastify";
 import ModalForm from "../../components/popup/ModalForm";
 import SalaryTypeAdd from "../salary_type/SalaryTypeAdd";
+import SalaryTypeService from './SalaryTypeService';
 
 const SalaryTypeList = () => {
   let navigate = useNavigate();
@@ -64,6 +19,7 @@ const SalaryTypeList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [meta, setMeta] = useState({});
   const [searchVal, setSearchVal] = useState("");
+  const [isReload, setIsReload] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleShow = () => {
@@ -102,6 +58,10 @@ const SalaryTypeList = () => {
     ),
   };
 
+  const onSubmitReload = () => {
+    setIsReload(!isReload);
+  }
+
   const onSizeChange = (pageSize) => {
     setLimit(pageSize);
   };
@@ -112,18 +72,27 @@ const SalaryTypeList = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axiosService
-      .get(
-        `http://localhost:8080/salary-type/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`
-      )
-      .then((response) => {
-        let meta = response.data.meta;
-        setMeta(meta);
+    // axiosService
+    //   .get(
+    //     `http://localhost:8080/salary-type/paging?page=${currentPage}&limit=${limit}&searchVal=${searchVal}`
+    //   )
+    //   .then((response) => {
+    //     let meta = response.data.meta;
+    //     setMeta(meta);
+    //     setSalaryType(response.data.list);
+    //     setIsLoading(false);
+    //     setPageNo(meta.totalPages);
+    //   });
+
+      SalaryTypeService.getSalaryTypeWithPaging(`page=${currentPage}&limit=${limit}&searchVal=${searchVal}`).then(response => {           
+        let meta = response.data.meta;            
+        setMeta(meta)
         setSalaryType(response.data.list);
         setIsLoading(false);
         setPageNo(meta.totalPages);
-      });
-  }, [currentPage, limit, searchVal]);
+
+    });
+  }, [currentPage, limit, searchVal, isReload]);
 
   tableProps.meta = { ...meta, setCurrentPage };
 
@@ -134,7 +103,9 @@ const SalaryTypeList = () => {
         <ModalForm
           show={show}
           handleClose={handleClose}
-          form={<SalaryTypeAdd handleClose={handleClose} />}></ModalForm>
+          >
+            <SalaryTypeAdd handleClose={handleClose} onSubmitReload={onSubmitReload} />
+          </ModalForm>
       )}
       {isLoading && <ProgressBar />}
       <BasicTable

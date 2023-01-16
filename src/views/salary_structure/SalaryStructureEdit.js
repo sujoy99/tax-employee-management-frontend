@@ -1,21 +1,23 @@
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from 'formik';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card } from "react-bootstrap";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import DefaultCard from '../../components/card/default/DefaultCard';
-import { SuccessToast } from '../../components/toaster/Toaster';
-import axiosService from '../../helpers/axiosService';
+import SalaryTypeService from '../salary_type/SalaryTypeService';
 import { SalaryStructure } from './SalaryStructure';
 import SalaryStructureForm from './SalaryStructureForm';
 import SalaryStructureService from './SalaryStructureService';
-import SalaryTypeService from '../salary_type/SalaryTypeService';
+import { SuccessToast } from "../../components/toaster/Toaster";
 
 
+const SalaryStructureEdit = () => {
 
-const SalaryStructureAdd = () => {
+    let { id } = useParams();
+    const navigate = useNavigate();
+    const [salaryStructure, setSalaryStructure] = useState(null)
     const [salaryTypeList, setSalaryTypeLists] = useState([]);
 
     const fetchSalaryTypeData = async () => {
@@ -23,12 +25,20 @@ const SalaryStructureAdd = () => {
         setSalaryTypeLists(response.data);
     }
 
+    async function fetchSalaryStructureData() {
+        const response = await SalaryStructureService.getSalaryStructureById(id);
+        if (response.status === 200) {
+            setSalaryStructure(response.data)
+        }
+    }
+
     useEffect(() => {
-        fetchSalaryTypeData()
+        fetchSalaryTypeData();
+        fetchSalaryStructureData();
     }, []);
 
     const cardProps = {
-        title: "Add New Salary Structure ",
+        title: "Edit Salary Structure ",
         headerSlot: () => (
 
             <Link to='/salary-structure'>
@@ -41,19 +51,10 @@ const SalaryStructureAdd = () => {
         ),
     };
 
-    const navigate = useNavigate();
-
     const onSubmit = async (values, onSubmitProps) => {
         try {
-            // const response = await axiosService.post('http://localhost:8080/salary-structure/save',values);
-            // console.log("what", values);
-            // const status = response.status;
-            // console.log("response ", response);
-            // if(status == 200) {
-            //     // Toaster.successToast(response.message)
-            //     SuccessToast(response.message, () => navigate("/salary-structure"))
-            // }
-            const response = await SalaryStructureService.createSalaryStructure(values)
+            console.log("ok", values)
+            const response = await SalaryStructureService.updateSalaryStructure(values, id)
             console.log("response", response);
             if (response.status === 200) {
                 onSubmitProps.setSubmitting(false)
@@ -72,22 +73,25 @@ const SalaryStructureAdd = () => {
             <Card border='white' className='table-wrapper table-responsive'>
                 <Card.Body className="shadow p-3 mb-5 bg-white rounded container">
                     <div className="row">
-                        {/* <div className="col-2"></div> */}
                         <div className=""></div>
                         {/* {loading && <ProgressBar />} */}
                         <div className="col-10">
-                            <Formik
-                                initialValues={SalaryStructure}
-                                validationSchema={SalaryStructure.validator()}
-                                onSubmit={onSubmit}>
-                                {(props) => {
-                                    // return <EmployeeForm dropDownOptions = {salaryStructureList} formType="add" {...props} />;
-                                    return <SalaryStructureForm dropdownOptions={salaryTypeList} formType="add" {...props} />
-                                }}
-                            </Formik>
-                        </div>
+                            { 
+                                salaryStructure && (
+                                    <Formik
+                                        initialValues={SalaryStructure.fromJson(salaryStructure)}
+                                        validationSchema={SalaryStructure.validator()}
+                                        onSubmit={onSubmit}
+                                        enableReinitialize={true}
+                                    >
+                                        {(props) => {
+                                            return <SalaryStructureForm dropdownOptions={salaryTypeList}  {...props} />
+                                        }}
+                                    </Formik>
+                                )
+                            }
 
-                        {/* <div className="col-2"></div> */}
+                        </div>
                     </div>
                     <ToastContainer />
                 </Card.Body>
@@ -96,4 +100,4 @@ const SalaryStructureAdd = () => {
     )
 }
 
-export default SalaryStructureAdd;
+export default SalaryStructureEdit
