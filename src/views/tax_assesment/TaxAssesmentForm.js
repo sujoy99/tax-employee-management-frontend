@@ -5,7 +5,7 @@ import React from "react";
 import { Button, Row } from "react-bootstrap";
 import FormikControl from "../../components/form/FormikControl";
 
-const SalaryStructureForm = (props) => {
+const TaxAssesmentForm = (props) => {
   const dropdownOption = props.dropdownOptions;
 
   return (
@@ -143,4 +143,4 @@ const SalaryStructureForm = (props) => {
   );
 };
 
-export default SalaryStructureForm;
+export default TaxAssesmentForm;
