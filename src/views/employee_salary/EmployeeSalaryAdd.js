@@ -81,7 +81,9 @@ const EmployeeSalaryAdd = () => {
                             <Formik
                                 initialValues={EmployeeSalary}
                                 // validationSchema={SalaryType.validator()}
-                                onSubmit={onSubmit}>
+                                onSubmit={onSubmit}
+                                enableReinitialize={true}
+                                >
                                 {(props) => {
                                     return <EmployeeSalaryForm formType="add" salaryTypeList={salaryTypeList} onChangeTaxYear={onChangeTaxYear} {...props} />;
                                 }}

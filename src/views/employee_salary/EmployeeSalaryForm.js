@@ -5,8 +5,8 @@ import FormikControl from '../../components/form/FormikControl';
 import BasicTable from '../../components/table/BasicTable';
 import {getSalaryObject} from '../../helpers/utils';
 
-const EmployeeSalaryForm = (props) => { console.log("props", props)
-    const {onChangeTaxYear, values, setValues, setFieldValue, salaryTypeList, touched, ...rest} = props;
+const EmployeeSalaryForm = (props) => { 
+    const {onChangeTaxYear, values, setValues, setFieldValue, salaryTypeList, touched, handleBlur,handleChange, ...rest} = props;
     const [basicSalary, setBasicSalary] = useState(0);
     const [houseAllowance, setHouseAllowance] = useState(0);
     const [medicalAllowance, setMedicalAllowance] = useState(0);
@@ -37,9 +37,23 @@ const EmployeeSalaryForm = (props) => { console.log("props", props)
         })*/
     }, [values?.lineItems]);
 
-    console.log('This is the basic salary', basicSalary);
-    console.log('This is the basic houseAllowance', houseAllowance);
-    console.log('This is the basic medicalAllowance', medicalAllowance);
+    const handleCalculation = (e) => {
+        console.log("e", e.target.getAttribute('name'));
+        handleChange(e);
+        let name = e.target.getAttribute('name');
+        var thenum = name.match(/\d+/)[0] // "3"
+        console.log("line", (values?.lineItems.length - salaryTypeList.length));
+        if(+thenum < (values?.lineItems.length - salaryTypeList.length)){
+            let totalIndex = (salaryTypeList.length * 12) + (+thenum % salaryTypeList.length)
+            console.log("value", values.lineItems[+totalIndex])
+            values.lineItems[+totalIndex].amount += +e.target.value
+        }
+        console.log("t", typeof thenum)        
+    }    
+
+    // console.log('This is the basic salary', basicSalary);
+    // console.log('This is the basic houseAllowance', houseAllowance);
+    // console.log('This is the basic medicalAllowance', medicalAllowance);
 
     const dropdownOptions = [
         {name: 'Select an option', value: ''},
@@ -65,7 +79,7 @@ const EmployeeSalaryForm = (props) => { console.log("props", props)
 
     useEffect(() => {
         //Runs only on the first render
-        if (values.taxYear) { console.log("testing")
+        if (values.taxYear) { 
             const [fromYear, toYear] = values.taxYear.split('-');
 
             const salaryPerMonth = getSalaryObject(fromYear, toYear, values, salaryTypeList);
@@ -128,7 +142,17 @@ const EmployeeSalaryForm = (props) => { console.log("props", props)
                                                             name={`lineItems[${index}].amount`}
                                                             className='form-control'
                                                             placeHolder='Enter Salary'
-                                                            // defaultValue={0}
+                                                            // value={col.amount}
+                                                            onChange={handleCalculation}
+
+                                                            // onChange={( e) => { console.log("e", e.target.getAttribute('name')); 
+                                                            //     handleChange(e);
+                                                            //     // values.amount = values.quantity
+                                                            //     //   ? e.target.value * values.quantity
+                                                            //     //   : 0;
+                                                            //   }} 
+                                                            
+                                                            // defaultValue={col.amount}
                                                         />
                                                     </td>
                                                 );
