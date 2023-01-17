@@ -1,65 +1,23 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {Form} from 'formik';
-
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Form } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Button, Row } from "react-bootstrap";
 import FormikControl from '../../components/form/FormikControl';
 import BasicTable from '../../components/table/BasicTable';
-import {getSalaryObject} from '../../helpers/utils';
+import { getSalaryObject, getSalaryObjectTotal } from '../../helpers/utils';
 
 const EmployeeSalaryForm = (props) => {
-    const {onChangeTaxYear, values, setValues, setFieldValue, ...rest} = props;
-    const [basicSalary, setBasicSalary] = useState(0);
-    const [houseAllowance, setHouseAllowance] = useState(0);
-    const [medicalAllowance, setMedicalAllowance] = useState(0);
-    let bSalary = 0;
-    let hSalary = 0;
-    let mSalary = 0;
+    const { onChangeTaxYear, values, setValues, setFieldValue, salaryTypeList, touched, handleBlur, handleChange, ...rest } = props;
+    const [tableProps, setTableProps] = useState({});
 
-    useEffect(() => {
-        values?.lineItems.map((item) => {
-            if (item?.salaryTypeId === 1) {
-                bSalary = bSalary + Number(item?.amount);
-                setBasicSalary(bSalary);
-            }
-            if (item?.salaryTypeId === 2) {
-                hSalary = hSalary + Number(item?.amount);
-                setHouseAllowance(hSalary);
-            }
-            if (item?.salaryTypeId === 3) {
-                mSalary = mSalary + Number(item?.amount);
-                setMedicalAllowance(mSalary);
-            }
-        });
-       /*values?.lineItems.push({
-            "salaryTypeId": 1,
-            "amount": basicSalary,
-            "isTotal": true
-        })*/
-    }, [values?.lineItems]);
-
-    console.log('This is the basic salary', basicSalary);
-    console.log('This is the basic houseAllowance', houseAllowance);
-    console.log('This is the basic medicalAllowance', medicalAllowance);
-
+    console.log("values:",values);
+    
     const dropdownOptions = [
-        {name: 'Select an option', value: ''},
-        {name: '2021-2022', value: '2021-2022'},
-        {name: '2022-2023', value: '2022-2023'},
-        {name: '2023-2024', value: '2023-2024'},
-    ];
-
-    const salaryTypeList = [
-        {
-            id: 1,
-            name: 'Basic',
-        },
-        {
-            id: 2,
-            name: 'House Rent',
-        },
-        {
-            id: 3,
-            name: 'Medical',
-        },
+        { name: 'Select an option', value: '' },
+        { name: '2021-2022', value: '2021-2022' },
+        { name: '2022-2023', value: '2022-2023' },
+        { name: '2023-2024', value: '2023-2024' },
     ];
 
     useEffect(() => {
@@ -67,27 +25,19 @@ const EmployeeSalaryForm = (props) => {
         if (values.taxYear) {
             const [fromYear, toYear] = values.taxYear.split('-');
 
-            const salaryPerMonth = getSalaryObject(fromYear, toYear, values);
+            const salaryPerMonth = getSalaryObject(fromYear, toYear, values, salaryTypeList);
+            const salaryPerYear = getSalaryObjectTotal(values, salaryTypeList);
+            console.log("salaryPerMonth", salaryPerMonth);
 
-            setValues({...values, salaryPerMonth});
-            // setIsLoading(false);
-            // call formik onChange method
-            // field.onChange(e);
+            let headers = salaryTypeList.map((item, idx) => {
+                return { id: item.name, label: item.name }
+            })
+            tableProps.headers = [{ id: 'id', label: "#" }, ...headers];
+            setValues({ ...values, salaryPerMonth, salaryPerYear });
         } else {
-            setValues({...values, salaryPerMonth: []});
+            setValues({ ...values, salaryPerMonth: [], salaryPerYear: [] });
         }
     }, [values.taxYear]);
-
-    const tableProps = {
-        headers: [
-            {id: 'id', label: '#'},
-            {id: 'basic', label: 'Basic'},
-            {id: 'houseRent', label: 'House Rent'},
-            {id: 'medical', label: 'Medical'},
-            // {id: "action", label: "Action", width: "120px"},
-        ],
-    };
-
     return (
         <Form className='form-horizontal'>
             <FormikControl
@@ -98,21 +48,22 @@ const EmployeeSalaryForm = (props) => {
                 options={dropdownOptions}
             />
             {values.salaryPerMonth.length > 0 && (
+                <>
                 <BasicTable {...tableProps}>
                     <>
                         {values.salaryPerMonth.length > 0 &&
-                            JSON.parse(JSON.stringify(values.salaryPerMonth)).map(
+                            values.salaryPerMonth.map(
                                 (row, rowIndex) => (
                                     <tr key={rowIndex}>
                                         <td>
-                      <span className='fw-normal'>
-                        {row.year + '-' + row.month}
-                      </span>
+                                            <span className='fw-normal'>
+                                                {row.rowHeader}
+                                            </span>
                                         </td>
-                                        {JSON.parse(JSON.stringify(row.list)).map(
+                                        {row.list.map(
                                             (col, colIndex) => {
                                                 // TODO: SHOULD BY DYNAMIC
-                                                let index = rowIndex * 3 + colIndex;
+                                                let index = rowIndex * salaryTypeList.length + colIndex;
 
                                                 return (
                                                     <td key={colIndex}>
@@ -121,9 +72,7 @@ const EmployeeSalaryForm = (props) => {
                                                             type='text'
                                                             name={`lineItems[${index}].amount`}
                                                             className='form-control'
-                                                            placeHolder='Enter Salary'
-                                                            defaultValue={0}
-                                                            isStyle='false'
+                                                            placeHolder='Enter Salary'                                                       
                                                         />
                                                     </td>
                                                 );
@@ -133,60 +82,45 @@ const EmployeeSalaryForm = (props) => {
                                 ),
                             )}
 
-                        <tr key={1}>
+                        <tr key={1000000}>
                             <td>
                                 <span className='fw-normal'>{'Total'}</span>
                             </td>
-                            <td key={1}>
-                                <FormikControl
-                                    control='input'
-                                    type='text'
-                                    realonly={true}
-                                    name={`lineItems.total.basic`}
-                                    value={basicSalary}
-                                    defaultValue={0}
-                                    isStyle='true'
-                                />
-                            </td>
-                            <td key={1}>
-                                <FormikControl
-                                    control='input'
-                                    type='text'
-                                    name={`lineItems.total.house_rent`}
-                                    value={houseAllowance}
-                                    defaultValue={0}
-                                    isStyle='true'
-                                />
-                            </td>
-                            <td key={1}>
-                                <FormikControl
-                                    control='input'
-                                    type='text'
-                                    name={`lineItems.total.medical`}
-                                    value={medicalAllowance}
-                                    defaultValue={0}
-                                    isStyle='true'
-                                />
-                            </td>
+                            {
+                                salaryTypeList.length > 0 && salaryTypeList.map((item, index) => {
+                                    return (
+                                        <td key={index}>
+                                            <FormikControl
+                                                control='input'
+                                                type='text'
+                                                name={`lineItemTotals[${index}].amount`}
+                                                className='form-control'
+                                                placeHolder='Enter Salary'
+                                                value={values.lineItemTotals[index].amount = values.lineItems
+                                                    .filter(x => x.salaryTypeId===item.value).reduce((acc, curr) => {
+                                                    return acc + Number(curr.amount)                                                    
+                                                }, 0) || '0'}
+                                            />
+                                        </td>
+                                    );
+                                })
+                            }
                         </tr>
                     </>
                 </BasicTable>
-            )}
-            {/* <pre>{JSON.stringify(values, undefined, 2)}</pre> */}
 
-            {/* <Col md={12} className='mb-10 mt-10 ml-5'>
-                <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
-                    <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
-                </Button>
-                <Button variant='white' className='f-right mr-10 btn-sm btn-secondary mx-2' type='reset'>
-                    <FontAwesomeIcon icon={faUndo} className='me-2' /> Reset
-                </Button>
-                <Link to='/portal/student-type'>
-                    <Button variant='white' className='f-right mr-10 btn-sm btn-danger' type='cancle'>
-                        <FontAwesomeIcon icon={faTimes} className='me-2' /> Cancel
-                    </Button>
-                </Link>
-            </Col> */}
+                <Row className='d-flex justify-content-center ml-5'>
+                                    
+                                    <Button variant='' className='f-right btn-color btn-sm btn-success' type='submit'>
+                                        <FontAwesomeIcon icon={faSave} className='me-2' /> Submit
+                                    </Button>
+
+                                </Row>
+
+                {/* <button type='submit'>submit</button> */}
+
+                </>
+            )}
         </Form>
     );
 };

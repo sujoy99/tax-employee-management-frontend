@@ -16,10 +16,11 @@ const EmployeeSalaryAdd = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const [salaryTypeList, setSalaryTypeLists] = useState([]);
+    const [salaryTypeObject, setSalaryTypeObject] = useState({});
 
     const fetchSalaryTypeData = async () => {
         const response = await SalaryTypeService.getSalaryTypes();
-        console.log("response  :: ", response);
+        // console.log("response  :: ", response);
         setSalaryTypeLists(response.data);
     }
 
@@ -44,11 +45,11 @@ const EmployeeSalaryAdd = () => {
     };
 
     const onSubmit = values => {
-        console.log(getSalaryObject(2022, 2023));
+        // console.log(getSalaryObject(2022, 2023));
         console.log('Form data', values)
     }
 
-    const onChangeTaxYear = (e, values, setValues, setFieldValue) => {
+    const onChangeTaxYear = (e, values, setValues, setFieldValue) => { console.log("hello")
             
             if(e.target.value){
                 const [fromYear, toYear] = e.target.value.split('-');
@@ -80,9 +81,11 @@ const EmployeeSalaryAdd = () => {
                             <Formik
                                 initialValues={EmployeeSalary}
                                 // validationSchema={SalaryType.validator()}
-                                onSubmit={onSubmit}>
+                                onSubmit={onSubmit}
+                                enableReinitialize={true}
+                                >
                                 {(props) => {
-                                    return <EmployeeSalaryForm formType="add" onChangeTaxYear={onChangeTaxYear} {...props} />;
+                                    return <EmployeeSalaryForm formType="add" salaryTypeList={salaryTypeList} onChangeTaxYear={onChangeTaxYear} {...props} />;
                                 }}
                             </Formik>
                         </div>
