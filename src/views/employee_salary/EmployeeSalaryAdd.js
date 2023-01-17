@@ -45,7 +45,7 @@ const EmployeeSalaryAdd = () => {
     };
 
     const onSubmit = values => {
-        console.log(getSalaryObject(2022, 2023));
+        // console.log(getSalaryObject(2022, 2023));
         console.log('Form data', values)
     }
 

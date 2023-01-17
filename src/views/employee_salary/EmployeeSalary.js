@@ -8,10 +8,11 @@ class EmployeeSalaryModel {
     constructor() {
         this.employeeId = "";
         this.taxYear = "";
-        this.taxAssesmentId = "";
+        // this.taxAssesmentId = "";
         // this.lineItems = [{ year: "", month: "", salaryTypeId: "", amount: "", isTotal: "" }]
         this.lineItems = []
         this.salaryPerMonth = [];
+        this.lineItemTotals = [];
     }
 
     /**
