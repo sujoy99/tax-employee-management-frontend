@@ -22,9 +22,9 @@ class SalaryTypeService {
         return axiosService.get(UrlBuilder.taxEmployeeManagementApi(`${SALARY_TYPE_API_BASE_URL}/find/${salaryTypeId}`));
     }
 
-    // updateEmployee(employee, employeeId){
-    //     return axios.put(EMPLOYEE_API_BASE_URL + '/' + employeeId, employee);
-    // }
+    updateSalaryTypeStatus(salaryTypeStatus, salaryTypeId){
+        return axiosService.put(UrlBuilder.taxEmployeeManagementApi(`${SALARY_TYPE_API_BASE_URL}/update/status/${salaryTypeId}`), salaryTypeStatus);
+    }
 
     // deleteEmployee(employeeId){
     //     return axios.delete(EMPLOYEE_API_BASE_URL + '/' + employeeId);

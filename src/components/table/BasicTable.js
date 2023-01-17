@@ -92,7 +92,7 @@ const BasicTable = (props) => {
                                             return (
                                                 <th
                                                     key={headerIndex}
-                                                    className="border-bottom"
+                                                    className="border-bottom text-center"
                                                     style={{ width: header.width }}
                                                 >
                                                     {header.label}
