@@ -27,6 +27,8 @@ const SalaryTypeAdd = (props) => {
     ),
   };
 
+  
+
   const testing = () => {
     handleClose();
   };

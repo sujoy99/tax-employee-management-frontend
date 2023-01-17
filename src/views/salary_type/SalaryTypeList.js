@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosService from "../../helpers/axiosService";
 import DefaultCard from "../../components/card/default/DefaultCard";
 import BasicTable from "../../components/table/BasicTable";
-import { ProgressBar } from "react-bootstrap";
+import { Button, Modal, ProgressBar } from "react-bootstrap";
 import CrudAction from "../../components/buttons/CrudAction";
 import { ToastContainer, toast } from "react-toastify";
 import ModalForm from "../../components/popup/ModalForm";
 import SalaryTypeAdd from "../salary_type/SalaryTypeAdd";
 import SalaryTypeService from './SalaryTypeService';
+import ModalStatus from "../../components/popup/ModalStatus";
+import { SuccessToast } from "../../components/toaster/Toaster";
 
 const SalaryTypeList = () => {
   let navigate = useNavigate();
@@ -22,17 +24,23 @@ const SalaryTypeList = () => {
   const [isReload, setIsReload] = useState(false);
 
   const [show, setShow] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+  const [statusType, setstatusType] = useState('')
+  const [salaryTypeId, setsalaryTypeId] = useState('');
+
+
   const handleShow = () => {
     console.log("clicked");
     setShow(true);
   };
   const handleClose = () => setShow(false);
+  const handleModalClose = () => {console.log("ok"); setShowStatus(false)};
 
   const tableProps = {
     headers: [
       { id: "name", label: "Salary Type" },
-      { id: "isActive", label: "Is Active" },
-      { id: "action", label: "Action", width: "100px" },
+      { id: "isActive", label: "Status" },
+      { id: "action", label: "Action", width: "140px" },
     ],
     perPage: [10, 20, 30, 40, 50],
     meta: {
@@ -42,6 +50,9 @@ const SalaryTypeList = () => {
       limit: 10,
     },
   };
+
+
+
 
   const cardProps = {
     title: "Manage Salary Type",
@@ -70,6 +81,33 @@ const SalaryTypeList = () => {
     setSearchVal(searchVal);
   };
 
+  const statusModal = (statustype,salaryTypeId) =>{console.log(statustype)
+    // alert("ok")
+    setShowStatus(true)
+    setstatusType(statustype)
+    setsalaryTypeId(salaryTypeId)
+    // setShowStatusModal(true);
+  }
+
+  const changeStatus = async () => {
+    console.log("change status",salaryTypeId,'akjsdahdof',statusType);
+
+    try {
+      console.log("ok")
+      const response = await SalaryTypeService.updateSalaryTypeStatus({'statusType' : statusType}, salaryTypeId)
+      console.log("response", response);
+      if (response.status === 200) {
+        setShowStatus(false);
+        setIsReload(!isReload);
+        SuccessToast(response.message, () => navigate("/salary-type"));
+      }
+
+  } catch (error) {
+      console.log(" Error Occured ", error);
+  }
+  }
+  
+
   useEffect(() => {
     setIsLoading(true);
     // axiosService
@@ -97,9 +135,10 @@ const SalaryTypeList = () => {
   tableProps.meta = { ...meta, setCurrentPage };
 
   return (
-    <DefaultCard className="mb-3" {...cardProps}>
+    <DefaultCard className="mb-4" {...cardProps}>
       <ToastContainer />
       {show && (
+        
         <ModalForm
           show={show}
           handleClose={handleClose}
@@ -107,6 +146,21 @@ const SalaryTypeList = () => {
             <SalaryTypeAdd handleClose={handleClose} onSubmitReload={onSubmitReload} />
           </ModalForm>
       )}
+
+      {showStatus && (
+        
+        <ModalStatus
+          show={showStatus}
+          handleModalClose={handleModalClose}
+          statusType= {statusType}
+          changeStatus = {changeStatus}
+          salaryTypeId = {salaryTypeId}
+          >
+            {/* <SalaryTypeAdd handleClose={handleClose} onSubmitReload={onSubmitReload} /> */}
+
+          </ModalStatus>
+      )}
+      
       {isLoading && <ProgressBar />}
       <BasicTable
         {...tableProps}
@@ -126,9 +180,8 @@ const SalaryTypeList = () => {
               <td>
                 <CrudAction
                   onShowClick={() => navigate(`/portal/student-type/${row.id}`)}
-                  onEditClick={() =>
-                    navigate(`/portal/student-type/${row.id}/edit`)
-                  }
+                  onEditClick={() => navigate(`/portal/student-type/${row.id}/edit`)}
+                  onStatusChangeClick={() =>statusModal(row.isActive,row.id)}
                   // onDeleteClick={() => onDeleteClick(row)}
                 />
               </td>
