@@ -39,6 +39,14 @@ class EmployeeService {
       employee
     );
   }
+  getSalaryTypeForEmployee(id) {
+    return axiosService.get(
+      UrlBuilder.taxEmployeeManagementApi(
+        `${EMPLOYEE_API_BASE_URL}/find/salaryType`
+      ),
+      id
+    );
+  }
 
   // updateEmployee(employee, employeeId){
   //     return axios.put(EMPLOYEE_API_BASE_URL + '/' + employeeId, employee);
